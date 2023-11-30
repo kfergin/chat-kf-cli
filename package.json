@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "description": "",
   "bin": {
-    "chat-kf-cli": "./executables/index.js"
+    "kf-chat-cli": "./executables/index.js"
   },
   "scripts": {
     "build": "tsc"
