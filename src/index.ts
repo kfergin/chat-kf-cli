@@ -3,7 +3,7 @@ import path from 'path';
 
 import dotenv from 'dotenv';
 
-import { dataDir } from './constants';
+import { conversationsDir, dataDir } from './constants';
 
 import getContentAndOptions from './get-content-and-options';
 import askGpt from './ask-gpt';
@@ -40,6 +40,7 @@ async function main() {
 
   if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir);
+    fs.mkdirSync(conversationsDir);
   }
 
   const [content, options] = await getContentAndOptions();
