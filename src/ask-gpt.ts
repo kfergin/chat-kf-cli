@@ -1,6 +1,13 @@
 import OpenAI from 'openai';
 
 export default async function askGpt(content: string) {
+  if (!content) {
+    process.stderr.write(
+      'Please provide an argument or pass data through stdin\n',
+    );
+    process.exit(1);
+  }
+
   process.stderr.write('\n' + String.fromCodePoint(0x1f916) + '...\n\n');
 
   try {

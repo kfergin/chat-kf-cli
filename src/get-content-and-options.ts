@@ -30,12 +30,5 @@ export default async function getContentAndOptions(): Promise<
     }
   });
 
-  if (!message) {
-    process.stderr.write(
-      'Please provide an argument or pass data through stdin\n',
-    );
-    process.exit(1);
-  }
-
   return [message, options];
 }
