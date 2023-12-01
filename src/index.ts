@@ -23,7 +23,7 @@ async function getMessage() {
       clearTimeout(timeoutId);
       resolve([null, messageArg]);
     } else {
-      // Receive data from a Here document
+      // Receive data from stdin (including a Here document)
       process.stdin.on('data', function (data) {
         clearTimeout(timeoutId);
         resolve([null, data.toString()]);
