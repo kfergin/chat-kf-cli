@@ -1,19 +1,24 @@
+import { readState } from './utils';
+
+type Options = {
+  conversationId: string | null;
+  help: boolean;
+};
+
 export default async function getContentAndOptions(): Promise<
-  [string, string[]]
+  [string, Options]
 > {
-  const [messageArg, options] = process.argv
-    .slice(2)
-    .reduce<[string, string[]]>(
-      (arr, arg) => {
-        if (/^-/.test(arg)) {
-          arr[1].push(arg);
-        } else {
-          arr[0] = arg;
-        }
-        return arr;
-      },
-      ['', []],
-    );
+  const [messageArg, flags] = process.argv.slice(2).reduce<[string, string[]]>(
+    (arr, arg) => {
+      if (/^-/.test(arg)) {
+        arr[1].push(arg);
+      } else {
+        arr[0] = arg;
+      }
+      return arr;
+    },
+    ['', []],
+  );
 
   const message = await new Promise<string>((resolve) => {
     const timeoutId = setTimeout(() => resolve(''), 100);
@@ -29,6 +34,20 @@ export default async function getContentAndOptions(): Promise<
       });
     }
   });
+
+  const options: Options = {
+    help: false,
+    conversationId: null,
+  };
+
+  for (const flag of flags) {
+    if (/^-h|^--help/.test(flag)) {
+      options.help = true;
+    } else if (/^-c|^--continue-conversation/.test(flag)) {
+      const state = await readState();
+      options.conversationId = state.currentConversation;
+    }
+  }
 
   return [message, options];
 }

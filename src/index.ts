@@ -49,17 +49,12 @@ async function main() {
 
   const [content, options] = await getContentAndOptions();
 
-  if (options.some((opt) => /-h|--help/.test(opt))) {
+  if (options.help) {
     process.stdout.write(HELP_MESSAGE);
     process.exit(0);
   }
 
-  const continueConverstion = options.some((opt) => /-c|--continue/.test(opt));
-  const conversationId: string | null = !continueConverstion
-    ? null
-    : await readState().then((state) => state.currentConversation);
-
-  askGpt(content, conversationId);
+  askGpt(content, options.conversationId);
 }
 
 main();
