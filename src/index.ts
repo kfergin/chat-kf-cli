@@ -4,6 +4,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 
 import { conversationsDir, dataDir } from './constants';
+import { readState } from './utils';
 
 import getContentAndOptions from './get-content-and-options';
 import askGpt from './ask-gpt';
@@ -56,10 +57,7 @@ async function main() {
   const continueConverstion = options.some((opt) => /-c|--continue/.test(opt));
   const conversationId: string | null = !continueConverstion
     ? null
-    : await fs
-        .readFile(path.join(dataDir, './state.json'), { encoding: 'utf8' })
-        .catch(() => '{currentConversation:null}')
-        .then((file) => JSON.parse(file).currentConversation);
+    : await readState().then((state) => state.currentConversation);
 
   askGpt(content, conversationId);
 }

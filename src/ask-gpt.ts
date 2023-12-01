@@ -4,6 +4,7 @@ import path from 'path';
 import OpenAI from 'openai';
 import { v4 as uuid } from 'uuid';
 import { conversationsDir, dataDir } from './constants';
+import { writeState } from './utils';
 
 type Message = {
   role: 'assistant' | 'user';
@@ -62,11 +63,7 @@ export default async function askGpt(
     const convoId = conversationId || uuid();
     messages.push({ role: 'assistant', content: fullResponse });
 
-    await fs.writeFile(
-      path.join(dataDir, './state.json'),
-      JSON.stringify({ currentConversation: convoId }),
-      { encoding: 'utf8' },
-    );
+    await writeState({ currentConversation: convoId });
     await fs.writeFile(
       path.join(conversationsDir, `./${convoId}.json`),
       JSON.stringify(messages),
