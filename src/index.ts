@@ -42,7 +42,7 @@ async function main() {
     process.exit(0);
   }
 
-  askGpt(content as string);
+  askGpt(content);
 }
 
 main();
