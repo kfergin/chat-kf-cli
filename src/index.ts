@@ -11,37 +11,36 @@ dotenv.config({ path: path.join(__dirname, '../.env') });
 async function getMessage() {
   const [messageArg] = process.argv.slice(2);
 
-  return new Promise<[string | null, string | null]>((resolve) => {
-    const timeoutId = setTimeout(() => {
-      resolve([
-        'Please provide an argument or pass data through stdin\n',
-        null,
-      ]);
-    }, 100);
+  const message = await new Promise<string>((resolve) => {
+    const timeoutId = setTimeout(() => resolve(''), 100);
 
     if (messageArg) {
       clearTimeout(timeoutId);
-      resolve([null, messageArg]);
+      resolve(messageArg);
     } else {
       // Receive data from stdin (including a Here document)
       process.stdin.on('data', function (data) {
         clearTimeout(timeoutId);
-        resolve([null, data.toString()]);
+        resolve(data.toString());
       });
     }
   });
+
+  if (!message) {
+    process.stderr.write(
+      'Please provide an argument or pass data through stdin\n',
+    );
+    process.exit(1);
+  }
+
+  return message;
 }
 
 async function main() {
   process.stdin.setEncoding('utf8');
   process.stderr.setEncoding('utf8');
 
-  const [errorMessage, content] = await getMessage();
-
-  if (errorMessage) {
-    process.stderr.write(errorMessage + '\n');
-    process.exit(1);
-  }
+  const content = await getMessage();
 
   askGpt(content as string);
 }
