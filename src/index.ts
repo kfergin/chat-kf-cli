@@ -1,6 +1,9 @@
+import fs from 'fs';
 import path from 'path';
 
 import dotenv from 'dotenv';
+
+import { dataDir } from './constants';
 
 import getContentAndOptions from './get-content-and-options';
 import askGpt from './ask-gpt';
@@ -34,6 +37,10 @@ $ cat some-file.ts | kf-chat-cli [option flags]
 async function main() {
   process.stdin.setEncoding('utf8');
   process.stderr.setEncoding('utf8');
+
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir);
+  }
 
   const [content, options] = await getContentAndOptions();
 
