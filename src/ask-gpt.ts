@@ -3,7 +3,7 @@ import path from 'path';
 
 import OpenAI from 'openai';
 import { v4 as uuid } from 'uuid';
-import { conversationsDir, dataDir } from './constants';
+import { conversationsDir } from './constants';
 import { writeState } from './utils';
 
 type Message = {

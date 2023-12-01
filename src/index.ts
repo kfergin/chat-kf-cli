@@ -4,7 +4,6 @@ import path from 'path';
 import dotenv from 'dotenv';
 
 import { conversationsDir, dataDir } from './constants';
-import { readState } from './utils';
 
 import getContentAndOptions from './get-content-and-options';
 import askGpt from './ask-gpt';
