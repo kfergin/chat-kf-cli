@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 
 import dotenv from 'dotenv';
@@ -38,9 +38,12 @@ async function main() {
   process.stdin.setEncoding('utf8');
   process.stderr.setEncoding('utf8');
 
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir);
-    fs.mkdirSync(conversationsDir);
+  try {
+    await fs.access(dataDir);
+  } catch {
+    // we could add this check: `error.code === 'ENOENT'`
+    // I think it's fine though
+    await Promise.all([fs.mkdir(dataDir), fs.mkdir(conversationsDir)]);
   }
 
   const [content, options] = await getContentAndOptions();
@@ -50,7 +53,15 @@ async function main() {
     process.exit(0);
   }
 
-  askGpt(content);
+  const continueConverstion = options.some((opt) => /-c|--continue/.test(opt));
+  const conversationId: string | null = !continueConverstion
+    ? null
+    : await fs
+        .readFile(path.join(dataDir, './state.json'), { encoding: 'utf8' })
+        .catch(() => '{currentConversation:null}')
+        .then((file) => JSON.parse(file).currentConversation);
+
+  askGpt(content, conversationId);
 }
 
 main();

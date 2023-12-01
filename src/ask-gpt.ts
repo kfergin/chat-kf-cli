@@ -3,14 +3,17 @@ import path from 'path';
 
 import OpenAI from 'openai';
 import { v4 as uuid } from 'uuid';
-import { conversationsDir } from './constants';
+import { conversationsDir, dataDir } from './constants';
 
 type Message = {
   role: 'assistant' | 'user';
   content: string;
 };
 
-export default async function askGpt(content: string) {
+export default async function askGpt(
+  content: string,
+  conversationId: string | null,
+) {
   if (!content) {
     process.stderr.write(
       'Please provide an argument or pass data through stdin\n',
@@ -21,7 +24,14 @@ export default async function askGpt(content: string) {
   process.stderr.write('\n' + String.fromCodePoint(0x1f916) + '...\n\n');
 
   try {
-    const messages: Message[] = [{ role: 'user', content }];
+    const priorMessages: Message[] = !conversationId
+      ? []
+      : await fs
+          .readFile(path.join(conversationsDir, `./${conversationId}.json`), {
+            encoding: 'utf8',
+          })
+          .then((file) => JSON.parse(file));
+    const messages: Message[] = [...priorMessages, { role: 'user', content }];
 
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
@@ -49,9 +59,14 @@ export default async function askGpt(content: string) {
     }
     process.stdout.write('\n\n');
 
-    const convoId = uuid();
+    const convoId = conversationId || uuid();
     messages.push({ role: 'assistant', content: fullResponse });
 
+    await fs.writeFile(
+      path.join(dataDir, './state.json'),
+      JSON.stringify({ currentConversation: convoId }),
+      { encoding: 'utf8' },
+    );
     await fs.writeFile(
       path.join(conversationsDir, `./${convoId}.json`),
       JSON.stringify(messages),
