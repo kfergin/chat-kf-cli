@@ -19,7 +19,7 @@ export default async function askGpt(
     process.exit(1);
   }
 
-  process.stderr.write('\n' + String.fromCodePoint(0x1f916) + '...\n\n');
+  process.stderr.write('\n' + String.fromCodePoint(0x1f916) + '\n\n');
 
   try {
     const priorMessages: Message[] = !conversationId
