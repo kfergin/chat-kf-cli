@@ -10,7 +10,7 @@ export default async function viewConversation(conversationId: string | null) {
   process.stdout.write(`Id: ${conversationId}\n`);
   process.stdout.write(`Last Modified: ${stats.mtime}\n`);
   for (const message of messages) {
-    process.stderr.write(
+    process.stdout.write(
       `\n${
         message.role === 'user'
           ? String.fromCodePoint(0x1f978)
