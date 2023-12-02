@@ -37,17 +37,17 @@ export default async function getContentAndOptions(): Promise<
   });
 
   const options: Options = {
-    help: false,
     conversationId: null,
+    help: false,
     listConversations: false,
   };
 
   for (const flag of flags) {
-    if (/^-h|^--help/.test(flag)) {
-      options.help = true;
-    } else if (/^-c|^--continue-conversation/.test(flag)) {
+    if (/^-c|^--continue-conversation/.test(flag)) {
       const state = await readState();
       options.conversationId = state.currentConversation;
+    } else if (/^-h|^--help/.test(flag)) {
+      options.help = true;
     } else if (/^-l|^--list-conversations/.test(flag)) {
       options.listConversations = true;
     }
