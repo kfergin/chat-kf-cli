@@ -48,7 +48,11 @@ export default async function getContentAndOptions(): Promise<
 
   for (const flag of flags) {
     if (/^-c|^--continue-conversation/.test(flag)) {
-      options.conversationId = state.currentConversation;
+      const [, shortMatch] = flag.match(/^-c=(.+)/) ?? [];
+      const [, longMatch] = flag.match(/^--continue-conversation=(.+)/) ?? [];
+
+      options.conversationId =
+        shortMatch ?? longMatch ?? state.currentConversation;
     } else if (/^-h|^--help/.test(flag)) {
       options.help = true;
     } else if (/^-l|^--list-conversations/.test(flag)) {
