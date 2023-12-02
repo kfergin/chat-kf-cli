@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import { conversationsDir } from './constants';
+import { conversationsDir, isTerminal } from './constants';
 import { Stats } from 'fs';
 
 export default async function listConversations() {
@@ -17,6 +17,10 @@ export default async function listConversations() {
     );
   });
 
+  if (isTerminal) {
+    process.stdout.write('\n');
+  }
+
   for (const file of sortedFiles) {
     const filePath = path.join(conversationsDir, file);
     const stats = await fs.stat(filePath);
@@ -26,10 +30,16 @@ export default async function listConversations() {
     const conversation = await fs
       .readFile(filePath, { encoding: 'utf8' })
       .then((file) => JSON.parse(file));
-    process.stdout.write(
-      conversation[0].content.slice(0, process.stdout.columns),
-    );
-    process.stdout.write(`\n  Id: ${fileId}\n`);
+    let firstMessageLine: string = conversation[0].content
+      .trim()
+      .split('\n')[0];
+
+    if (isTerminal && firstMessageLine.length > process.stdout.columns) {
+      firstMessageLine = firstMessageLine.slice(0, process.stdout.columns + 1);
+    }
+
+    process.stdout.write(firstMessageLine + '\n');
+    process.stdout.write(`  Id: ${fileId}\n`);
     process.stdout.write(`  Last Modified: ${stats.mtime}\n`);
     process.stdout.write('\n');
   }
