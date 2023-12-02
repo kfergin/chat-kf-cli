@@ -3,13 +3,10 @@ import path from 'path';
 
 import OpenAI from 'openai';
 import { v4 as uuid } from 'uuid';
-import { conversationsDir } from './constants';
-import { writeState } from './utils';
 
-type Message = {
-  role: 'assistant' | 'user';
-  content: string;
-};
+import { conversationsDir } from './constants';
+import { getConversation, writeState } from './utils';
+import { Message } from './types';
 
 export default async function askGpt(
   content: string,
@@ -27,11 +24,7 @@ export default async function askGpt(
   try {
     const priorMessages: Message[] = !conversationId
       ? []
-      : await fs
-          .readFile(path.join(conversationsDir, `./${conversationId}.json`), {
-            encoding: 'utf8',
-          })
-          .then((file) => JSON.parse(file));
+      : await getConversation(conversationId).then(([messages]) => messages);
     const messages: Message[] = [...priorMessages, { role: 'user', content }];
 
     const openai = new OpenAI({

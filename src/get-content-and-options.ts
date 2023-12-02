@@ -4,6 +4,7 @@ type Options = {
   conversationId: string | null;
   help: boolean;
   listConversations: boolean;
+  viewConversation: boolean;
 };
 
 export default async function getContentAndOptions(): Promise<
@@ -36,20 +37,29 @@ export default async function getContentAndOptions(): Promise<
     }
   });
 
+  const state = await readState();
+
   const options: Options = {
     conversationId: null,
     help: false,
     listConversations: false,
+    viewConversation: false,
   };
 
   for (const flag of flags) {
     if (/^-c|^--continue-conversation/.test(flag)) {
-      const state = await readState();
       options.conversationId = state.currentConversation;
     } else if (/^-h|^--help/.test(flag)) {
       options.help = true;
     } else if (/^-l|^--list-conversations/.test(flag)) {
       options.listConversations = true;
+    } else if (/^-v|^--view-conversation/.test(flag)) {
+      const [, shortMatch] = flag.match(/^-v=(.+)/) ?? [];
+      const [, longMatch] = flag.match(/^--view-conversation=(.+)/) ?? [];
+
+      options.viewConversation = true;
+      options.conversationId =
+        shortMatch ?? longMatch ?? state.currentConversation;
     }
   }
 

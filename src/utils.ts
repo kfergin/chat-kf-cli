@@ -1,13 +1,27 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import { dataDir } from './constants';
+import { conversationsDir, dataDir } from './constants';
+import { Message } from './types';
+import { Stats } from 'fs';
 
-type State = {
+type CliState = {
   currentConversation: string | null;
 };
 
-export async function readState(): Promise<State> {
+export async function getConversation(
+  conversationId: string,
+): Promise<[Message[], Stats]> {
+  const filePath = path.join(conversationsDir, `./${conversationId}.json`);
+  return Promise.all([
+    fs
+      .readFile(filePath, { encoding: 'utf8' })
+      .then((file) => JSON.parse(file)),
+    fs.stat(filePath),
+  ]);
+}
+
+export async function readState(): Promise<CliState> {
   try {
     const file = await fs.readFile(path.join(dataDir, './state.json'), {
       encoding: 'utf8',
@@ -18,7 +32,7 @@ export async function readState(): Promise<State> {
   }
 }
 
-export function writeState(state: State) {
+export function writeState(state: CliState) {
   return fs.writeFile(
     path.join(dataDir, './state.json'),
     JSON.stringify(state),
