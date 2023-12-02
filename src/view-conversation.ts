@@ -1,3 +1,4 @@
+import { isTerminal } from './constants';
 import { getConversation } from './utils';
 
 export default async function viewConversation(conversationId: string | null) {
@@ -7,6 +8,11 @@ export default async function viewConversation(conversationId: string | null) {
   }
 
   const [messages, stats] = await getConversation(conversationId);
+
+  if (isTerminal) {
+    process.stdout.write('\n');
+  }
+
   process.stdout.write(`Id: ${conversationId}\n`);
   process.stdout.write(`Last Modified: ${stats.mtime}\n`);
   for (const message of messages) {
