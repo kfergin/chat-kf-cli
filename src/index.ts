@@ -7,6 +7,7 @@ import { conversationsDir, dataDir } from './constants';
 
 import getContentAndOptions from './get-content-and-options';
 import askGpt from './ask-gpt';
+import listConversations from './list-conversations';
 
 // the default `path` is `path.resolve(process.cwd(), '.env')`
 // and I want to call this command from anywhere
@@ -53,7 +54,12 @@ async function main() {
     process.exit(0);
   }
 
-  askGpt(content, options.conversationId);
+  if (options.listConversations) {
+    await listConversations();
+    process.exit(0);
+  }
+
+  await askGpt(content, options.conversationId);
 }
 
 main();

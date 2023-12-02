@@ -3,6 +3,7 @@ import { readState } from './utils';
 type Options = {
   conversationId: string | null;
   help: boolean;
+  listConversations: boolean;
 };
 
 export default async function getContentAndOptions(): Promise<
@@ -38,6 +39,7 @@ export default async function getContentAndOptions(): Promise<
   const options: Options = {
     help: false,
     conversationId: null,
+    listConversations: false,
   };
 
   for (const flag of flags) {
@@ -46,6 +48,8 @@ export default async function getContentAndOptions(): Promise<
     } else if (/^-c|^--continue-conversation/.test(flag)) {
       const state = await readState();
       options.conversationId = state.currentConversation;
+    } else if (/^-l|^--list-conversations/.test(flag)) {
+      options.listConversations = true;
     }
   }
 
