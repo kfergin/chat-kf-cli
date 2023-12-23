@@ -14,25 +14,53 @@ import viewConversation from './view-conversation';
 // and I want to call this command from anywhere
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
-const HELP_MESSAGE = `USAGE:
+const HELP_MESSAGE = `Usage: kf-chat-cli [options] [message]
 
-\`\`\`shell
-$ kf-chat-cli [option flags] "What is the meaning of life?"
-\`\`\`
+Arguments:
+  message       Text to be processed by the application. If not provided,
+                the application will wait to receive input from stdin.
 
-Stdin can also be used to pass a message to gpt
+Options:
+  -c, --continue-conversation=<id>
+                Continues a conversation using the specified conversation ID.
+                If no ID is provided, the application will use the current
+                conversation state.
 
-\`\`\`shell
-$ kf-chat-cli [option flags] <<'EOF'
-heredoc>What does this do?
-heredoc>\`\`\`javascript
-heredoc>  console.log('42');
-heredoc>\`\`\`
-heredoc>EOF
-$
-# OR
-$ cat some-file.ts | kf-chat-cli [option flags]
-\`\`\`
+  -h, --help    Displays this help message and exits.
+
+  -l, --list-conversations
+                Lists all available conversations.
+
+  -v, --view-conversation=<id>
+                Views a particular conversation given its ID. If no ID is
+                provided, the application will use the current conversation
+                state.
+
+Examples:
+  kf-chat-cli -c "Hello world"
+                Sends "Hello world" message and continues with the current
+                conversation.
+
+  kf-chat-cli --list-conversations
+                Lists all conversations without sending a message.
+
+  kf-chat-cli -v=12345
+                Views the conversation with ID 12345.
+
+  echo "Hello again" | kf-chat-cli
+                Pipes "Hello again" message into the application and waits
+                for further instructions.
+
+  kf-chat-cli <<'EOF'
+  heredoc> Hello, what does \`ls\` do?
+  heredoc> EOF
+                Uses a heredoc to send a message. Useful to not not worry
+                about escaping lines.
+
+Note:
+  If a conversation ID is not specified with the '-c' or '-v' options and
+  the current conversation state exists, the application will default to
+  the current conversation.
 
 `;
 
