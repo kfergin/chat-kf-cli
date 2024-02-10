@@ -9,6 +9,11 @@ type CliState = {
   currentConversation: string | null;
 };
 
+export async function deleteConversation(conversationId: string) {
+  const filePath = path.join(conversationsDir, `./${conversationId}.json`);
+  await fs.unlink(filePath);
+}
+
 export async function getConversation(
   conversationId: string,
 ): Promise<[Message[], Stats]> {

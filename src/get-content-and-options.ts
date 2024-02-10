@@ -2,6 +2,7 @@ import { readState } from './utils';
 
 type Options = {
   conversationId: string | null;
+  deleteConversation: boolean;
   help: boolean;
   listConversations: boolean;
   viewConversation: boolean;
@@ -41,6 +42,7 @@ export default async function getContentAndOptions(): Promise<
 
   const options: Options = {
     conversationId: null,
+    deleteConversation: false,
     help: false,
     listConversations: false,
     viewConversation: false,
@@ -53,6 +55,14 @@ export default async function getContentAndOptions(): Promise<
 
       options.conversationId =
         shortMatch ?? longMatch ?? state.currentConversation;
+    } else if (/^-d|^--delete-conversation/.test(flag)) {
+      const [, shortMatch] = flag.match(/^-d=(.+)/) ?? [];
+      const [, longMatch] = flag.match(/^--delete-conversation=(.+)/) ?? [];
+
+      if (shortMatch || longMatch) {
+        options.deleteConversation = true;
+        options.conversationId = shortMatch ?? longMatch;
+      }
     } else if (/^-h|^--help/.test(flag)) {
       options.help = true;
     } else if (/^-l|^--list-conversations/.test(flag)) {
