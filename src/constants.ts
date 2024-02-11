@@ -15,17 +15,22 @@ Options:
   -c, --continue-conversation=<id>
                 Continues a conversation using the specified conversation ID.
                 If no ID is provided, the application will use the current
-                conversation state.
+                conversation.
+
+  -d, --delete-conversation=<id>
+                Deletes a conversation using the specified conversation ID.
+                If no ID is provided, the application will use the current
+                conversation.
 
   -h, --help    Displays this help message and exits.
 
-  -l, --list-conversations
-                Lists all available conversations.
+  -l, --list-conversations=<number>
+                Lists all available conversations. If a number is provided,
+                the application will only list that amount of conversations.
 
   -v, --view-conversation=<id>
                 Views a particular conversation given its ID. If no ID is
-                provided, the application will use the current conversation
-                state.
+                provided, the application will use the current conversation.
 
 Examples:
   kf-chat-cli -c "Hello world"
@@ -49,8 +54,8 @@ Examples:
                 about escaping lines.
 
 Note:
-  If a conversation ID is not specified with the '-c' or '-v' options and
-  the current conversation state exists, the application will default to
+  If a conversation ID is not specified with the '-c', '-d', or '-v' options
+  and the current conversation exists, the application will default to
   the current conversation.
 
 `;
