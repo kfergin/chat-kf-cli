@@ -5,6 +5,7 @@ type Options = {
   deleteConversation: boolean;
   help: boolean;
   listConversations: boolean;
+  numConversationsListed: number | undefined;
   viewConversation: boolean;
 };
 
@@ -45,6 +46,7 @@ export default async function getContentAndOptions(): Promise<
     deleteConversation: false,
     help: false,
     listConversations: false,
+    numConversationsListed: undefined,
     viewConversation: false,
   };
 
@@ -68,7 +70,14 @@ export default async function getContentAndOptions(): Promise<
     } else if (/^-h|^--help/.test(flag)) {
       options.help = true;
     } else if (/^-l|^--list-conversations/.test(flag)) {
+      const [, shortMatch] = flag.match(/^-l=([1-9][0-9]*)/) ?? [];
+      const [, longMatch] =
+        flag.match(/^--list-conversations=([1-9][0-9]*)/) ?? [];
+
       options.listConversations = true;
+      if (shortMatch || longMatch) {
+        options.numConversationsListed = parseInt(shortMatch || longMatch, 10);
+      }
     } else if (/^-v|^--view-conversation/.test(flag)) {
       const [, shortMatch] = flag.match(/^-v=(.+)/) ?? [];
       const [, longMatch] = flag.match(/^--view-conversation=(.+)/) ?? [];

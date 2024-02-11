@@ -5,7 +5,9 @@ import { conversationsDir, isTerminal } from './constants';
 import { Stats } from 'fs';
 import { Message } from './types';
 
-export default async function listConversations() {
+export default async function listConversations(
+  numConversationsListed: number | undefined,
+) {
   const files = await fs.readdir(conversationsDir);
   const fileStatsMap = new Map<string, Stats>();
   for (const file of files) {
@@ -22,7 +24,7 @@ export default async function listConversations() {
     process.stdout.write('\n');
   }
 
-  for (const file of sortedFiles) {
+  for (const file of sortedFiles.slice(0, numConversationsListed)) {
     const filePath = path.join(conversationsDir, file);
     const stats = await fs.stat(filePath);
 

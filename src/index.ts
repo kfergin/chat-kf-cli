@@ -35,7 +35,7 @@ async function main() {
   }
 
   if (options.listConversations) {
-    await listConversations();
+    await listConversations(options.numConversationsListed);
     process.exit(0);
   }
 
