@@ -60,13 +60,10 @@ export default async function getContentAndOptions(): Promise<
     } else if (/^-d|^--delete-conversation/.test(flag)) {
       const [, shortMatch] = flag.match(/^-d=(.+)/) ?? [];
       const [, longMatch] = flag.match(/^--delete-conversation=(.+)/) ?? [];
-      const conversationId =
-        shortMatch ?? longMatch ?? state.currentConversation;
 
-      if (conversationId) {
-        options.deleteConversation = true;
-        options.conversationId = conversationId;
-      }
+      options.deleteConversation = true;
+      options.conversationId =
+        shortMatch ?? longMatch ?? state.currentConversation;
     } else if (/^-h|^--help/.test(flag)) {
       options.help = true;
     } else if (/^-l|^--list-conversations/.test(flag)) {
