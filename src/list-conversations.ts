@@ -3,6 +3,7 @@ import path from 'path';
 
 import { conversationsDir, isTerminal } from './constants';
 import { Stats } from 'fs';
+import { Message } from './types';
 
 export default async function listConversations() {
   const files = await fs.readdir(conversationsDir);
@@ -27,12 +28,10 @@ export default async function listConversations() {
 
     const fileId = file.replace(/\.json$/, '');
 
-    const conversation = await fs
+    const conversation: Message[] = await fs
       .readFile(filePath, { encoding: 'utf8' })
       .then((file) => JSON.parse(file));
-    let firstMessageLine: string = conversation[0].content
-      .trim()
-      .split('\n')[0];
+    let firstMessageLine = conversation[0].content.trim().split('\n')[0];
 
     if (isTerminal && firstMessageLine.length > process.stdout.columns) {
       firstMessageLine = firstMessageLine.slice(0, process.stdout.columns + 1);
