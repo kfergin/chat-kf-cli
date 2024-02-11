@@ -58,10 +58,12 @@ export default async function getContentAndOptions(): Promise<
     } else if (/^-d|^--delete-conversation/.test(flag)) {
       const [, shortMatch] = flag.match(/^-d=(.+)/) ?? [];
       const [, longMatch] = flag.match(/^--delete-conversation=(.+)/) ?? [];
+      const conversationId =
+        shortMatch ?? longMatch ?? state.currentConversation;
 
-      if (shortMatch || longMatch) {
+      if (conversationId) {
         options.deleteConversation = true;
-        options.conversationId = shortMatch ?? longMatch;
+        options.conversationId = conversationId;
       }
     } else if (/^-h|^--help/.test(flag)) {
       options.help = true;

@@ -54,7 +54,7 @@ export default async function deleteConversation(
 Conversation Id: ${conversationId}
 First Message: ${firstMessage}
 
-Are you sure you want delete this conversation? (yes/no) `,
+Are you sure you want delete this conversation? yes/no: `,
   );
 
   if (!shouldContinue) {
