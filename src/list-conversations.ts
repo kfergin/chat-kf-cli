@@ -1,37 +1,19 @@
 import fs from 'fs/promises';
-import path from 'path';
 
-import { conversationsDir, isTerminal } from './constants';
-import { Stats } from 'fs';
+import { isTerminal } from './constants';
 import { Message } from './types';
+import { getConversationFiles } from './utils';
 
 export default async function listConversations(
   numConversationsListed: number | undefined,
 ) {
-  const files = await fs.readdir(conversationsDir);
-  const fileStatsMap = new Map<string, Stats>();
-  for (const file of files) {
-    fileStatsMap.set(file, await fs.stat(path.join(conversationsDir, file)));
-  }
-  const sortedFiles = files.sort((fileA, fileB) => {
-    return (
-      Number(fileStatsMap.get(fileB)!.mtime) -
-      Number(fileStatsMap.get(fileA)!.mtime)
-    );
-  });
-
   if (isTerminal) {
     process.stdout.write('\n');
   }
 
-  for (const file of sortedFiles.slice(0, numConversationsListed)) {
-    const filePath = path.join(conversationsDir, file);
-    const stats = await fs.stat(filePath);
-
-    const fileId = file.replace(/\.json$/, '');
-
+  for (const fileInfo of await getConversationFiles(numConversationsListed)) {
     const conversation: Message[] = await fs
-      .readFile(filePath, { encoding: 'utf8' })
+      .readFile(fileInfo.fullPath, { encoding: 'utf8' })
       .then((file) => JSON.parse(file));
     let firstMessageLine = conversation[0].content.trim().split('\n')[0];
 
@@ -40,8 +22,8 @@ export default async function listConversations(
     }
 
     process.stdout.write(firstMessageLine + '\n');
-    process.stdout.write(`  Id: ${fileId}\n`);
-    process.stdout.write(`  Last Modified: ${stats.mtime}\n`);
+    process.stdout.write(`  Id: ${fileInfo.id}\n`);
+    process.stdout.write(`  Last Modified: ${fileInfo.stats.mtime}\n`);
     process.stdout.write('\n');
   }
 }

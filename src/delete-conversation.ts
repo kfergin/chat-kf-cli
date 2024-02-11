@@ -4,6 +4,7 @@ import { isTerminal } from './constants';
 import {
   deleteConversation as deleteConversationFile,
   getConversation,
+  getConversationFiles,
   readState,
   writeState,
 } from './utils';
@@ -62,12 +63,13 @@ Are you sure you want delete this conversation? yes/no: `,
     process.exit(0);
   }
 
+  await deleteConversationFile(conversationId);
+
   const { currentConversation } = await readState();
   if (conversationId === currentConversation) {
-    await writeState({ currentConversation: null });
+    const [lastModified] = await getConversationFiles(1);
+    await writeState({ currentConversation: lastModified?.id ?? null });
   }
-
-  await deleteConversationFile(conversationId);
 
   if (isTerminal) {
     process.stdout.write('\n');

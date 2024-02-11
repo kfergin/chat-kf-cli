@@ -26,6 +26,31 @@ export async function getConversation(
   ]);
 }
 
+type FileInfo = {
+  fullPath: string;
+  id: string;
+  stats: Stats;
+};
+
+export async function getConversationFiles(maxNum: number | undefined) {
+  const pathsAndStats: FileInfo[] = [];
+
+  for (const file of await fs.readdir(conversationsDir)) {
+    const fullPath = path.join(conversationsDir, file);
+    pathsAndStats.push({
+      fullPath,
+      id: file.replace(/\.json$/, ''),
+      stats: await fs.stat(fullPath),
+    });
+  }
+
+  return pathsAndStats
+    .sort(({ stats: statsA }, { stats: statsB }) => {
+      return Number(statsB.mtime) - Number(statsA.mtime);
+    })
+    .slice(0, maxNum);
+}
+
 export async function readState(): Promise<CliState> {
   try {
     const file = await fs.readFile(path.join(dataDir, './state.json'), {
