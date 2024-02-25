@@ -28,6 +28,10 @@ Options:
                 Lists all available conversations. If a number is provided,
                 the application will only list that amount of conversations.
 
+  -t, --token-count
+                Displays the token count and cost in cents for the provided
+                message.
+
   -v, --view-conversation=<id>
                 Views a particular conversation given its ID. If no ID is
                 provided, the application will use the current conversation.

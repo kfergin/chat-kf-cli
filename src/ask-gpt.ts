@@ -14,7 +14,7 @@ export default async function askGpt(
 ) {
   if (!content) {
     process.stderr.write(
-      'Please provide an argument or pass data through stdin\n',
+      'Please provide text as an argument or pass through stdin\n',
     );
     process.exit(1);
   }

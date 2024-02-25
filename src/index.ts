@@ -7,6 +7,7 @@ import { HELP_MESSAGE, conversationsDir, dataDir } from './constants';
 
 import getContentAndOptions from './get-content-and-options';
 import askGpt from './ask-gpt';
+import countContentTokens from './count-content-tokens';
 import deleteConversation from './delete-conversation';
 import listConversations from './list-conversations';
 import viewConversation from './view-conversation';
@@ -46,6 +47,11 @@ async function main() {
 
   if (options.deleteConversation) {
     await deleteConversation(options.conversationId);
+    process.exit(0);
+  }
+
+  if (options.tokenCount) {
+    await countContentTokens(content);
     process.exit(0);
   }
 

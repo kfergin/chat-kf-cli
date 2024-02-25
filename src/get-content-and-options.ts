@@ -6,6 +6,7 @@ type Options = {
   help: boolean;
   listConversations: boolean;
   numConversationsListed: number | undefined;
+  tokenCount: boolean;
   viewConversation: boolean;
 };
 
@@ -47,6 +48,7 @@ export default async function getContentAndOptions(): Promise<
     help: false,
     listConversations: false,
     numConversationsListed: undefined,
+    tokenCount: false,
     viewConversation: false,
   };
 
@@ -75,6 +77,8 @@ export default async function getContentAndOptions(): Promise<
       if (shortMatch || longMatch) {
         options.numConversationsListed = parseInt(shortMatch || longMatch, 10);
       }
+    } else if (/^-t|^--token-count/.test(flag)) {
+      options.tokenCount = true;
     } else if (/^-v|^--view-conversation/.test(flag)) {
       const [, shortMatch] = flag.match(/^-v=(.+)/) ?? [];
       const [, longMatch] = flag.match(/^--view-conversation=(.+)/) ?? [];
