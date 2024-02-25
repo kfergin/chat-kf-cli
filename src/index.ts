@@ -55,7 +55,11 @@ async function main() {
     process.exit(0);
   }
 
-  await askGpt(content, options.conversationId);
+  await askGpt({
+    content,
+    conversationId: options.conversationId,
+    saveConversation: !options.noSave,
+  });
 }
 
 void main();

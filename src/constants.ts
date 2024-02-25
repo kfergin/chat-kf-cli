@@ -27,6 +27,9 @@ Options:
   -l, --list-conversations=<number>
                 Lists all available conversations. If a number is provided,
                 the application will only list that amount of conversations.
+  -n, --no-save
+                Disables saving a new conversation or continuation of an
+                existing conversation. The default is to save.
 
   -t, --token-count
                 Displays the token count and cost in cents for the provided

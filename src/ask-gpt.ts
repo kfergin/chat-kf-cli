@@ -8,10 +8,17 @@ import { conversationsDir } from './constants';
 import { getConversation, writeState } from './utils';
 import { Message } from './types';
 
-export default async function askGpt(
-  content: string,
-  conversationId: string | null,
-) {
+interface AskGptArgs {
+  content: string;
+  conversationId: string | null;
+  saveConversation: boolean;
+}
+
+export default async function askGpt({
+  content,
+  conversationId,
+  saveConversation,
+}: AskGptArgs) {
   if (!content) {
     process.stderr.write(
       'Please provide text as an argument or pass through stdin\n',
@@ -52,6 +59,8 @@ export default async function askGpt(
       }
     }
     process.stdout.write('\n\n');
+
+    if (!saveConversation) return;
 
     // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
     const convoId = conversationId || uuid();
