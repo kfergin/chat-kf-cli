@@ -24,8 +24,11 @@ export default function countContentTokens(content: string) {
     costInCents = exactCostInCents.toFixed(digits);
   }
 
+  // https://platform.openai.com/docs/models
+  // https://openai.com/pricing
   process.stdout.write(`
 Model: ${model} @ 1¢ / 1K Tokens
+Content Window: 128K tokens
 Token count: ${tokenCount}
 Cost: ${costInCents}¢
 
