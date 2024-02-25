@@ -12,9 +12,9 @@ export default async function listConversations(
   }
 
   for (const fileInfo of await getConversationFiles(numConversationsListed)) {
-    const conversation: Message[] = await fs
-      .readFile(fileInfo.fullPath, { encoding: 'utf8' })
-      .then((file) => JSON.parse(file));
+    const conversation = JSON.parse(
+      await fs.readFile(fileInfo.fullPath, { encoding: 'utf8' }),
+    ) as Message[];
     let firstMessageLine = conversation[0].content.trim().split('\n')[0];
 
     if (isTerminal && firstMessageLine.length > process.stdout.columns) {
@@ -23,7 +23,9 @@ export default async function listConversations(
 
     process.stdout.write(firstMessageLine + '\n');
     process.stdout.write(`  Id: ${fileInfo.id}\n`);
-    process.stdout.write(`  Last Modified: ${fileInfo.stats.mtime}\n`);
+    process.stdout.write(
+      `  Last Modified: ${fileInfo.stats.mtime.toString()}\n`,
+    );
     process.stdout.write('\n');
   }
 }

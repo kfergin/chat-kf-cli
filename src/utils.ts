@@ -5,9 +5,9 @@ import { conversationsDir, dataDir } from './constants';
 import { Message } from './types';
 import { Stats } from 'fs';
 
-type CliState = {
+interface CliState {
   currentConversation: string | null;
-};
+}
 
 export async function deleteConversation(conversationId: string) {
   const filePath = path.join(conversationsDir, `./${conversationId}.json`);
@@ -21,16 +21,16 @@ export async function getConversation(
   return Promise.all([
     fs
       .readFile(filePath, { encoding: 'utf8' })
-      .then((file) => JSON.parse(file)),
+      .then((file) => JSON.parse(file) as Message[]),
     fs.stat(filePath),
   ]);
 }
 
-type FileInfo = {
+interface FileInfo {
   fullPath: string;
   id: string;
   stats: Stats;
-};
+}
 
 export async function getConversationFiles(maxNum: number | undefined) {
   const pathsAndStats: FileInfo[] = [];
@@ -56,7 +56,7 @@ export async function readState(): Promise<CliState> {
     const file = await fs.readFile(path.join(dataDir, './state.json'), {
       encoding: 'utf8',
     });
-    return JSON.parse(file);
+    return JSON.parse(file) as CliState;
   } catch {
     return { currentConversation: null };
   }

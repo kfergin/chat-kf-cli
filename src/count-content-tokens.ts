@@ -1,6 +1,6 @@
 import { encoding_for_model } from 'tiktoken';
 
-export default async function countContentTokens(content: string) {
+export default function countContentTokens(content: string) {
   if (!content) {
     process.stderr.write(
       'Please provide text as an argument or pass through stdin\n',

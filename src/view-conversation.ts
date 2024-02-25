@@ -14,7 +14,7 @@ export default async function viewConversation(conversationId: string | null) {
   }
 
   process.stdout.write(`Id: ${conversationId}\n`);
-  process.stdout.write(`Last Modified: ${stats.mtime}\n`);
+  process.stdout.write(`Last Modified: ${stats.mtime.toString()}\n`);
   for (const message of messages) {
     process.stdout.write(
       `\n${

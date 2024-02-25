@@ -51,11 +51,11 @@ async function main() {
   }
 
   if (options.tokenCount) {
-    await countContentTokens(content);
+    countContentTokens(content);
     process.exit(0);
   }
 
   await askGpt(content, options.conversationId);
 }
 
-main();
+void main();

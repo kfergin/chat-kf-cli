@@ -42,7 +42,7 @@ export default async function deleteConversation(
       messages[0].content.trim(),
     );
   } catch (error) {
-    if ((error as NodeJS.ErrnoException)?.code === 'ENOENT') {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
       process.stderr.write(`Invalid conversation id: "${conversationId}"\n\n`);
       process.exit(1);
     } else {
@@ -68,7 +68,8 @@ Are you sure you want delete this conversation? yes/no: `,
   const { currentConversation } = await readState();
   if (conversationId === currentConversation) {
     const [lastModified] = await getConversationFiles(1);
-    await writeState({ currentConversation: lastModified?.id ?? null });
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    await writeState({ currentConversation: lastModified.id ?? null });
   }
 
   if (isTerminal) {

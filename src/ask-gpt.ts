@@ -53,6 +53,7 @@ export default async function askGpt(
     }
     process.stdout.write('\n\n');
 
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
     const convoId = conversationId || uuid();
     messages.push({ role: 'assistant', content: fullResponse });
 

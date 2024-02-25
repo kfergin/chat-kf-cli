@@ -1,6 +1,6 @@
 import { readState } from './utils';
 
-type Options = {
+interface Options {
   conversationId: string | null;
   deleteConversation: boolean;
   help: boolean;
@@ -8,14 +8,14 @@ type Options = {
   numConversationsListed: number | undefined;
   tokenCount: boolean;
   viewConversation: boolean;
-};
+}
 
 export default async function getContentAndOptions(): Promise<
   [string, Options]
 > {
   const [messageArg, flags] = process.argv.slice(2).reduce<[string, string[]]>(
     (arr, arg) => {
-      if (/^-/.test(arg)) {
+      if (arg.startsWith('-')) {
         arr[1].push(arg);
       } else {
         arr[0] = arg;
@@ -26,7 +26,9 @@ export default async function getContentAndOptions(): Promise<
   );
 
   const message = await new Promise<string>((resolve) => {
-    const timeoutId = setTimeout(() => resolve(''), 100);
+    const timeoutId = setTimeout(() => {
+      resolve('');
+    }, 100);
 
     if (messageArg) {
       clearTimeout(timeoutId);
@@ -58,6 +60,7 @@ export default async function getContentAndOptions(): Promise<
       const [, longMatch] = flag.match(/^--continue-conversation=(.+)/) ?? [];
 
       options.conversationId =
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         shortMatch ?? longMatch ?? state.currentConversation;
     } else if (/^-d|^--delete-conversation/.test(flag)) {
       const [, shortMatch] = flag.match(/^-d=(.+)/) ?? [];
@@ -65,6 +68,7 @@ export default async function getContentAndOptions(): Promise<
 
       options.deleteConversation = true;
       options.conversationId =
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         shortMatch ?? longMatch ?? state.currentConversation;
     } else if (/^-h|^--help/.test(flag)) {
       options.help = true;
@@ -85,6 +89,7 @@ export default async function getContentAndOptions(): Promise<
 
       options.viewConversation = true;
       options.conversationId =
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         shortMatch ?? longMatch ?? state.currentConversation;
     }
   }
