@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
 is_preview=false
 file_to_save=
@@ -18,7 +18,7 @@ else
   fi
 fi
 
-find . -type f -print0 | while IFS= read -r -d $'\0' file; do
+while IFS= read -r -d $'\0' file; do
   regex="(\.git/|\.DS_Store|server/data|node_modules|dist|package-lock\.json)"
   if [[ $file =~ $regex ]]; then
     continue
@@ -37,4 +37,4 @@ find . -type f -print0 | while IFS= read -r -d $'\0' file; do
     echo ""
     echo ""
   } >> "$file_to_save"
-done
+done < <(find . -type f -print0)

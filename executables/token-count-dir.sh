@@ -1,8 +1,8 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
 total_token_count=0
 
-find . -type f -print0 | while IFS= read -r -d $'\0' file; do
+while IFS= read -r -d $'\0' file; do
   regex="(\.git/|\.DS_Store|server/data|node_modules|dist|package-lock\.json)"
   if [[ $file =~ $regex ]]; then
     continue
@@ -16,6 +16,6 @@ find . -type f -print0 | while IFS= read -r -d $'\0' file; do
     token_count="${BASH_REMATCH[1]}"
     ((total_token_count += token_count))
   fi
-done
+done < <(find . -type f -print0)
 
 echo "Total token count: $total_token_count"
