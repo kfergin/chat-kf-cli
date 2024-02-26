@@ -41,7 +41,7 @@ Options:
 
 Examples:
   kf-chat-cli -c "Hello world"
-                Sends "Hello world" message and continues with the current
+                Sends "Hello world" message, continuing with the current
                 conversation.
 
   kf-chat-cli --list-conversations
@@ -51,14 +51,22 @@ Examples:
                 Views the conversation with ID 12345.
 
   echo "Hello again" | kf-chat-cli
-                Pipes "Hello again" message into the application and waits
-                for further instructions.
+                Sends "Hello again" message.
 
   kf-chat-cli <<'EOF'
   heredoc> Hello, what does \`ls\` do?
   heredoc> EOF
-                Uses a heredoc to send a message. Useful to not not worry
-                about escaping lines.
+                Uses a heredoc to send a message. Useful for now worrying about
+                escaping lines. EOF without quotes will perform variable and
+                command substitution within the heredoc (you may want this).
+
+  {
+    echo "Some text before the file content"
+    cat ./my-file.txt
+    echo "Some text after the file content"
+  } | kf-chat-cli
+                Uses a group command \`{ ... }\` to group multiple commands
+                together, whose combined output is then sent as a message.
 
 Note:
   If a conversation ID is not specified with the '-c', '-d', or '-v' options
