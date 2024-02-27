@@ -18,8 +18,14 @@ else
   fi
 fi
 
+more_filter="$2"
+
+if [ -n "$more_filter" ]; then
+  more_filter="|$more_filter"
+fi
+
 while IFS= read -r -d $'\0' file; do
-  regex="(\.git/|\.DS_Store|server/data|node_modules|dist|package-lock\.json)"
+  regex="(\.git/|\.DS_Store|node_modules|dist|package-lock\.json$more_filter)"
   if [[ $file =~ $regex ]]; then
     continue
   fi

@@ -1,9 +1,15 @@
 #!/bin/bash
 
+more_filter="$1"
+
+if [ -n "$more_filter" ]; then
+  more_filter="|$more_filter"
+fi
+
 total_token_count=0
 
 while IFS= read -r -d $'\0' file; do
-  regex="(\.git/|\.DS_Store|server/data|node_modules|dist|package-lock\.json)"
+  regex="(\.git/|\.DS_Store|node_modules|dist|package-lock\.json$more_filter)"
   if [[ $file =~ $regex ]]; then
     continue
   fi
