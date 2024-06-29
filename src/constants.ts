@@ -22,11 +22,18 @@ Options:
                 If no ID is provided, the application will use the current
                 conversation.
 
+  --full-conversation
+                Tells the script to expect a full conversation in the message.
+                i.e. multiple messages, a back and forth conversation. This
+                option assumes the conversation is stored elsewhere, e.g.
+                a file or buffer, and will not save the conversation.
+
   -h, --help    Displays this help message and exits.
 
   -l, --list-conversations=<number>
                 Lists all available conversations. If a number is provided,
                 the application will only list that amount of conversations.
+
   -n, --no-save
                 Disables saving a new conversation or continuation of an
                 existing conversation. The default is to save.

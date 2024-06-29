@@ -11,12 +11,25 @@ import { Message } from './types';
 interface AskGptArgs {
   content: string;
   conversationId: string | null;
+  fullConversation: boolean;
   saveConversation: boolean;
+}
+
+const FULL_CONVERSATION_DELIMITER = '---chat-delimiter---';
+
+function getMessagesFromFullConversation(fullContent: string): Message[] {
+  return fullContent
+    .split(FULL_CONVERSATION_DELIMITER)
+    .map((content, index) => ({
+      role: index % 2 === 0 ? 'user' : 'assistant',
+      content,
+    }));
 }
 
 export default async function askGpt({
   content,
   conversationId,
+  fullConversation,
   saveConversation,
 }: AskGptArgs) {
   if (!content) {
@@ -26,12 +39,27 @@ export default async function askGpt({
     process.exit(1);
   }
 
-  process.stdout.write('\n' + String.fromCodePoint(0x1f916) + '\n\n');
+  if (fullConversation && saveConversation) {
+    process.stderr.write(
+      'You cannot save a full conversation. --full-conversation assumes the conversation is stored elsewhere, e.g. a file or buffer.\n',
+    );
+    process.exit(1);
+  }
+
+  process.stdout.write(
+    `\n${
+      fullConversation
+        ? FULL_CONVERSATION_DELIMITER
+        : String.fromCodePoint(0x1f916)
+    }\n\n`,
+  );
 
   try {
-    const priorMessages: Message[] = !conversationId
-      ? []
-      : await getConversation(conversationId).then(([messages]) => messages);
+    const priorMessages: Message[] = fullConversation
+      ? getMessagesFromFullConversation(content)
+      : !conversationId
+        ? []
+        : await getConversation(conversationId).then(([messages]) => messages);
     const messages: Message[] = [...priorMessages, { role: 'user', content }];
 
     const openai = new OpenAI({
@@ -59,7 +87,12 @@ export default async function askGpt({
         fullResponse += content;
       }
     }
-    process.stdout.write('\n\n');
+
+    if (!fullConversation) {
+      process.stdout.write('\n\n');
+    } else {
+      process.stdout.write(`\n\n${FULL_CONVERSATION_DELIMITER}\n\n`);
+    }
 
     if (!saveConversation) return;
 

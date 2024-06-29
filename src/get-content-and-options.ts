@@ -3,6 +3,7 @@ import { readState } from './utils';
 interface Options {
   conversationId: string | null;
   deleteConversation: boolean;
+  fullConversation: boolean;
   help: boolean;
   listConversations: boolean;
   noSave: boolean;
@@ -48,6 +49,7 @@ export default async function getContentAndOptions(): Promise<
   const options: Options = {
     conversationId: null,
     deleteConversation: false,
+    fullConversation: false,
     help: false,
     listConversations: false,
     noSave: false,
@@ -72,6 +74,10 @@ export default async function getContentAndOptions(): Promise<
       options.conversationId =
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         shortMatch ?? longMatch ?? state.currentConversation;
+      // eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with
+    } else if (/^--full-conversation/.test(flag)) {
+      options.fullConversation = true;
+      options.noSave = true;
     } else if (/^-h|^--help/.test(flag)) {
       options.help = true;
     } else if (/^-l|^--list-conversations/.test(flag)) {

@@ -58,6 +58,7 @@ async function main() {
   await askGpt({
     content,
     conversationId: options.conversationId,
+    fullConversation: options.fullConversation,
     saveConversation: !options.noSave,
   });
 }
