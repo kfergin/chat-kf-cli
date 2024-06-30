@@ -1,12 +1,12 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import OpenAI from 'openai';
 import { v4 as uuid } from 'uuid';
 
 import { conversationsDir } from './constants';
 import { getConversation, writeState } from './utils';
 import { Message } from './types';
+import promptOpenai from './prompt-openai';
 
 interface PromptArgs {
   content: string;
@@ -62,31 +62,7 @@ export default async function prompt({
         : await getConversation(conversationId).then(([messages]) => messages);
     const messages: Message[] = [...priorMessages, { role: 'user', content }];
 
-    const openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
-
-    const completion = await openai.chat.completions.create({
-      messages,
-      // model: 'gpt-4o'
-      model: 'gpt-4-turbo',
-      stream: true,
-      // temperature: 0,
-      // max_tokens: maxTokensResponse,
-    });
-
-    let fullResponse = '';
-
-    for await (const chunk of completion) {
-      const content = chunk.choices[0].delta.content;
-      // e.g.
-      // `choices: [ { index: 0, delta: { content: '.' }, finish_reason: null } ]`
-      // `choices: [ { index: 0, delta: {}, finish_reason: 'stop' } ]`
-      if (content) {
-        process.stdout.write(content);
-        fullResponse += content;
-      }
-    }
+    const fullResponse = await promptOpenai({ messages });
 
     if (!fullConversation) {
       process.stdout.write('\n\n');
