@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 import { HELP_MESSAGE, conversationsDir, dataDir } from './constants';
 
 import getContentAndOptions from './get-content-and-options';
-import askGpt from './ask-gpt';
+import prompt from './prompt';
 import countContentTokens from './count-content-tokens';
 import deleteConversation from './delete-conversation';
 import listConversations from './list-conversations';
@@ -55,7 +55,7 @@ async function main() {
     process.exit(0);
   }
 
-  await askGpt({
+  await prompt({
     content,
     conversationId: options.conversationId,
     fullConversation: options.fullConversation,

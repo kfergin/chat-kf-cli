@@ -8,7 +8,7 @@ import { conversationsDir } from './constants';
 import { getConversation, writeState } from './utils';
 import { Message } from './types';
 
-interface AskGptArgs {
+interface PromptArgs {
   content: string;
   conversationId: string | null;
   fullConversation: boolean;
@@ -26,12 +26,12 @@ function getMessagesFromFullConversation(fullContent: string): Message[] {
     }));
 }
 
-export default async function askGpt({
+export default async function prompt({
   content,
   conversationId,
   fullConversation,
   saveConversation,
-}: AskGptArgs) {
+}: PromptArgs) {
   if (!content) {
     process.stderr.write(
       'Please provide text as an argument or pass through stdin\n',
