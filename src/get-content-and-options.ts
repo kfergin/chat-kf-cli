@@ -9,6 +9,7 @@ interface Options {
   noSave: boolean;
   numConversationsListed: number | undefined;
   selectedModel: string;
+  setModel: boolean;
   tokenCount: boolean;
   viewConversation: boolean;
   viewModel: boolean;
@@ -57,6 +58,7 @@ export default async function getContentAndOptions(): Promise<
     noSave: false,
     numConversationsListed: undefined,
     selectedModel: state.selectedModel ?? 'gpt-4-turbo',
+    setModel: false,
     tokenCount: false,
     viewConversation: false,
     viewModel: false,
@@ -100,6 +102,12 @@ export default async function getContentAndOptions(): Promise<
         '';
     } else if (/^-n|^--no-save/.test(flag)) {
       options.noSave = true;
+    } else if (/^-s|^--set-model/.test(flag)) {
+      options.setModel = true;
+      options.selectedModel =
+        flag.match(/^-s=(.+)/)?.[1] ??
+        flag.match(/^--set-model=(.+)/)?.[1] ??
+        '';
     } else if (/^-t|^--token-count/.test(flag)) {
       options.tokenCount = true;
     } else if (/^-v(=.*)?$|^--view-conversation/.test(flag)) {

@@ -4,8 +4,8 @@ import path from 'path';
 import { v4 as uuid } from 'uuid';
 
 import { AVAILABLE_MODELS, conversationsDir } from './constants';
-import { getConversation, patchState } from './utils';
-import { Message, ModelName } from './types';
+import { isValidModelName, getConversation, patchState } from './utils';
+import { Message } from './types';
 import promptOpenai from './prompt-openai';
 import promptGoogleAI from './prompt-google-ai';
 
@@ -15,10 +15,6 @@ interface PromptArgs {
   fullConversation: boolean;
   modelName: string;
   saveConversation: boolean;
-}
-
-function isValidModelName(modelName: string): modelName is ModelName {
-  return AVAILABLE_MODELS.includes(modelName as ModelName);
 }
 
 const FULL_CONVERSATION_DELIMITER = '---chat-delimiter---';

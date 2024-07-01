@@ -15,6 +15,10 @@ export async function deleteConversation(conversationId: string) {
   await fs.unlink(filePath);
 }
 
+export function isValidModelName(modelName: string): modelName is ModelName {
+  return AVAILABLE_MODELS.includes(modelName as ModelName);
+}
+
 export async function getConversation(
   conversationId: string,
 ): Promise<[Message[], Stats]> {

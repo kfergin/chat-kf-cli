@@ -11,6 +11,7 @@ import prompt from './prompt';
 import countContentTokens from './count-content-tokens';
 import deleteConversation from './delete-conversation';
 import listConversations from './list-conversations';
+import setModel from './set-model';
 import viewConversation from './view-conversation';
 
 // the default `path` is `path.resolve(process.cwd(), '.env')`
@@ -38,6 +39,11 @@ async function main() {
 
   if (options.viewModel) {
     printModelInformation(options.selectedModel);
+    process.exit(0);
+  }
+
+  if (options.setModel) {
+    await setModel(options.selectedModel);
     process.exit(0);
   }
 

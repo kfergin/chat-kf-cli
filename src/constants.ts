@@ -51,6 +51,10 @@ Options:
                 Disables saving a new conversation or continuation of an
                 existing conversation. The default is to save.
 
+   -s, --set-model=<name>
+                Sets the model to use for the conversation. This option
+                will save the model for future conversations.
+
   -t, --token-count
                 Displays the token count and cost in cents for the provided
                 message.
