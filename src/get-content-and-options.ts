@@ -82,13 +82,13 @@ export default async function getContentAndOptions(): Promise<
     } else if (/^-h|^--help/.test(flag)) {
       options.help = true;
     } else if (/^-l|^--list-conversations/.test(flag)) {
-      const [, shortMatch] = flag.match(/^-l=([1-9][0-9]*)/) ?? [];
-      const [, longMatch] =
-        flag.match(/^--list-conversations=([1-9][0-9]*)/) ?? [];
+      const match =
+        flag.match(/^-l=([1-9][0-9]*)/)?.[1] ??
+        flag.match(/^--list-conversations=([1-9][0-9]*)/)?.[1];
 
       options.listConversations = true;
-      if (shortMatch || longMatch) {
-        options.numConversationsListed = parseInt(shortMatch || longMatch, 10);
+      if (match) {
+        options.numConversationsListed = parseInt(match, 10);
       }
     } else if (/^-m|^--model-name/.test(flag)) {
       options.selectedModel =
