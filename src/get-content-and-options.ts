@@ -66,12 +66,10 @@ export default async function getContentAndOptions(): Promise<
 
   for (const flag of flags) {
     if (/^-c|^--continue-conversation/.test(flag)) {
-      const [, shortMatch] = flag.match(/^-c=(.+)/) ?? [];
-      const [, longMatch] = flag.match(/^--continue-conversation=(.+)/) ?? [];
-
       options.conversationId =
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        shortMatch ?? longMatch ?? state.currentConversation;
+        flag.match(/^-c=(.+)/)?.[1] ??
+        flag.match(/^--continue-conversation=(.+)/)?.[1] ??
+        state.currentConversation;
     } else if (/^-d|^--delete-conversation/.test(flag)) {
       const [, shortMatch] = flag.match(/^-d=(.+)/) ?? [];
       const [, longMatch] = flag.match(/^--delete-conversation=(.+)/) ?? [];
