@@ -7,8 +7,18 @@ export const conversationsDir = path.join(dataDir, './conversations/');
 
 export const isTerminal = process.stdout.isTTY;
 
-const AVAILABLE_GOOGLE_AI_MODELS: GoogleAIModelName[] = ['gemini-1.5-flash'];
-export const AVAILABLE_OPENAI_MODELS: OpenAIModelName[] = ['gpt-4-turbo'];
+// https://ai.google.dev/gemini-api/docs/models/gemini
+const AVAILABLE_GOOGLE_AI_MODELS: GoogleAIModelName[] = [
+  'gemini-1.5-flash', // 1M+ tokens - Free - May 2024 (last update)
+  'gemini-1.5-pro', // 2M+ tokens - Free - May 2024 (last update)
+];
+// https://platform.openai.com/docs/models
+// https://openai.com/api/pricing/
+export const AVAILABLE_OPENAI_MODELS: OpenAIModelName[] = [
+  'gpt-4-turbo', // 128,000 tokens - $10.00 / 1M tokens - Up to Dec 2023
+  'gpt-4o', // 128,000 tokens - $5.00 / 1M input tokens - Up to Oct 2023
+  'gpt-3.5-turbo', // 16,385 tokens - $0.50 / 1M input tokens - Up to Sep 2021
+];
 export const AVAILABLE_MODELS: ModelName[] = [
   ...AVAILABLE_GOOGLE_AI_MODELS,
   ...AVAILABLE_OPENAI_MODELS,

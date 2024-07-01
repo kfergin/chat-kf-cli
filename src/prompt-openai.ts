@@ -20,7 +20,6 @@ export default async function promptOpenai({
 
   const completion = await openai.chat.completions.create({
     messages,
-    // model: 'gpt-4o'
     model: modelName,
     stream: true,
     // temperature: 0,
