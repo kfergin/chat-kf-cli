@@ -106,13 +106,11 @@ export default async function getContentAndOptions(): Promise<
     } else if (/^-t|^--token-count/.test(flag)) {
       options.tokenCount = true;
     } else if (/^-v(=.*)?$|^--view-conversation/.test(flag)) {
-      const [, shortMatch] = flag.match(/^-v=(.+)/) ?? [];
-      const [, longMatch] = flag.match(/^--view-conversation=(.+)/) ?? [];
-
       options.viewConversation = true;
       options.conversationId =
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        shortMatch ?? longMatch ?? state.currentConversation;
+        flag.match(/^-v=(.+)/)?.[1] ??
+        flag.match(/^--view-conversation=(.+)/)?.[1] ??
+        state.currentConversation;
     } else if (/^-vm|^--view-model/.test(flag)) {
       options.viewModel = true;
     }
