@@ -3,4 +3,6 @@ export interface Message {
   content: string;
 }
 
-export type ModelName = 'gpt-4-turbo' | 'gemini-1.5-flash';
+export type GoogleAIModelName = 'gemini-1.5-flash';
+export type OpenAIModelName = 'gpt-4-turbo';
+export type ModelName = OpenAIModelName | GoogleAIModelName;

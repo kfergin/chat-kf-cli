@@ -63,7 +63,7 @@ async function main() {
   }
 
   if (options.tokenCount) {
-    countContentTokens(content);
+    countContentTokens(content, options.selectedModel);
     process.exit(0);
   }
 

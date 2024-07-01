@@ -1,15 +1,17 @@
 import path from 'path';
 
-import { ModelName } from './types';
+import { GoogleAIModelName, ModelName, OpenAIModelName } from './types';
 
 export const dataDir = path.join(__dirname, '../data/');
 export const conversationsDir = path.join(dataDir, './conversations/');
 
 export const isTerminal = process.stdout.isTTY;
 
+const AVAILABLE_GOOGLE_AI_MODELS: GoogleAIModelName[] = ['gemini-1.5-flash'];
+export const AVAILABLE_OPENAI_MODELS: OpenAIModelName[] = ['gpt-4-turbo'];
 export const AVAILABLE_MODELS: ModelName[] = [
-  'gemini-1.5-flash',
-  'gpt-4-turbo',
+  ...AVAILABLE_GOOGLE_AI_MODELS,
+  ...AVAILABLE_OPENAI_MODELS,
 ];
 
 export const HELP_MESSAGE = `Usage: kf-chat-cli [options] [message]

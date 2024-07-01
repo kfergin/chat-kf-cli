@@ -1,6 +1,15 @@
 import { encoding_for_model } from 'tiktoken';
 
-export default function countContentTokens(content: string) {
+import { OpenAIModelName } from './types';
+import { AVAILABLE_OPENAI_MODELS } from './constants';
+
+function isValidOpenAiModelName(
+  modelName: string,
+): modelName is OpenAIModelName {
+  return AVAILABLE_OPENAI_MODELS.includes(modelName as OpenAIModelName);
+}
+
+export default function countContentTokens(content: string, modelName: string) {
   if (!content) {
     process.stderr.write(
       'Please provide text as an argument or pass through stdin\n',
@@ -8,8 +17,14 @@ export default function countContentTokens(content: string) {
     process.exit(1);
   }
 
-  const model = 'gpt-4-turbo-preview';
-  const encoding = encoding_for_model(model);
+  if (!isValidOpenAiModelName(modelName)) {
+    process.stderr.write(
+      `Invalid model name: ${modelName}. Only OpenAI models are currently supported. Available models are: ${AVAILABLE_OPENAI_MODELS.join(', ')}\n`,
+    );
+    process.exit(1);
+  }
+
+  const encoding = encoding_for_model(modelName);
   const tokenCount = encoding.encode(content).length;
   encoding.free();
 
@@ -27,7 +42,7 @@ export default function countContentTokens(content: string) {
   // https://platform.openai.com/docs/models
   // https://openai.com/pricing
   process.stdout.write(`
-Model: ${model} @ 1¢ / 1K Tokens
+Model: ${modelName} @ 1¢ / 1K Tokens
 Content Window: 128K tokens
 Token count: ${tokenCount.toString()}
 Cost: ${costInCents}¢
