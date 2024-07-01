@@ -76,7 +76,6 @@ export default async function getContentAndOptions(): Promise<
         flag.match(/^-d=(.+)/)?.[1] ??
         flag.match(/^--delete-conversation=(.+)/)?.[1] ??
         state.currentConversation;
-      // eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with
     } else if (/^--full-conversation/.test(flag)) {
       options.fullConversation = true;
       options.noSave = true;

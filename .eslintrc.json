@@ -24,5 +24,7 @@
       }
     }
   ],
-  "rules": {}
+  "rules": {
+    "@typescript-eslint/prefer-string-starts-ends-with": "off"
+  }
 }
