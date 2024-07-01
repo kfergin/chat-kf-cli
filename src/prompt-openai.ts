@@ -1,11 +1,15 @@
 import OpenAI from 'openai';
-import { Message } from './types';
+import { Message, OpenAIModelName } from './types';
 
 interface PromptOpenaiArgs {
   messages: Message[];
+  modelName: OpenAIModelName;
 }
 
-export default async function promptOpenai({ messages }: PromptOpenaiArgs) {
+export default async function promptOpenai({
+  messages,
+  modelName,
+}: PromptOpenaiArgs) {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
     throw Error(
@@ -17,7 +21,7 @@ export default async function promptOpenai({ messages }: PromptOpenaiArgs) {
   const completion = await openai.chat.completions.create({
     messages,
     // model: 'gpt-4o'
-    model: 'gpt-4-turbo',
+    model: modelName,
     stream: true,
     // temperature: 0,
     // max_tokens: maxTokensResponse,

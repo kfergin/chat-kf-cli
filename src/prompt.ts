@@ -4,7 +4,12 @@ import path from 'path';
 import { v4 as uuid } from 'uuid';
 
 import { AVAILABLE_MODELS, conversationsDir } from './constants';
-import { isValidModelName, getConversation, patchState } from './utils';
+import {
+  isValidModelName,
+  getConversation,
+  patchState,
+  isValidOpenAiModelName,
+} from './utils';
 import { Message } from './types';
 import promptOpenai from './prompt-openai';
 import promptGoogleAI from './prompt-google-ai';
@@ -74,10 +79,9 @@ export default async function prompt({
         : await getConversation(conversationId).then(([messages]) => messages);
     const messages: Message[] = [...priorMessages, { role: 'user', content }];
 
-    const fullResponse =
-      modelName === 'gpt-4-turbo'
-        ? await promptOpenai({ messages })
-        : await promptGoogleAI({ messages });
+    const fullResponse = isValidOpenAiModelName(modelName)
+      ? await promptOpenai({ messages, modelName })
+      : await promptGoogleAI({ messages, modelName });
 
     if (!fullConversation) {
       process.stdout.write('\n\n');

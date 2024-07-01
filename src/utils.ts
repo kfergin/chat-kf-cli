@@ -1,8 +1,13 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import { AVAILABLE_MODELS, conversationsDir, dataDir } from './constants';
-import { Message, ModelName } from './types';
+import {
+  AVAILABLE_MODELS,
+  AVAILABLE_OPENAI_MODELS,
+  conversationsDir,
+  dataDir,
+} from './constants';
+import { Message, ModelName, OpenAIModelName } from './types';
 import { Stats } from 'fs';
 
 interface CliState {
@@ -17,6 +22,12 @@ export async function deleteConversation(conversationId: string) {
 
 export function isValidModelName(modelName: string): modelName is ModelName {
   return AVAILABLE_MODELS.includes(modelName as ModelName);
+}
+
+export function isValidOpenAiModelName(
+  modelName: string,
+): modelName is OpenAIModelName {
+  return AVAILABLE_OPENAI_MODELS.includes(modelName as OpenAIModelName);
 }
 
 export async function getConversation(

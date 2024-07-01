@@ -1,12 +1,16 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-import { Message } from './types';
+import { GoogleAIModelName, Message } from './types';
 
 interface PromptGoogleAIArgs {
   messages: Message[];
+  modelName: GoogleAIModelName;
 }
 
-export default async function promptGoogleAI({ messages }: PromptGoogleAIArgs) {
+export default async function promptGoogleAI({
+  messages,
+  modelName,
+}: PromptGoogleAIArgs) {
   const apiKey = process.env.GOOGLE_API_KEY;
   if (!apiKey) {
     throw Error(
@@ -15,7 +19,7 @@ export default async function promptGoogleAI({ messages }: PromptGoogleAIArgs) {
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  const model = genAI.getGenerativeModel({ model: modelName });
 
   const priorMessages = messages.length > 1 ? messages.slice(0, -1) : [];
   const lastMessage = messages[messages.length - 1];

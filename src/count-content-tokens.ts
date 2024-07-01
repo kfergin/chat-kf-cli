@@ -1,13 +1,7 @@
 import { encoding_for_model } from 'tiktoken';
 
-import { OpenAIModelName } from './types';
 import { AVAILABLE_OPENAI_MODELS } from './constants';
-
-function isValidOpenAiModelName(
-  modelName: string,
-): modelName is OpenAIModelName {
-  return AVAILABLE_OPENAI_MODELS.includes(modelName as OpenAIModelName);
-}
+import { isValidOpenAiModelName } from './utils';
 
 export default function countContentTokens(content: string, modelName: string) {
   if (!content) {
