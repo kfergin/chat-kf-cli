@@ -1,12 +1,13 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import { conversationsDir, dataDir } from './constants';
-import { Message } from './types';
+import { AVAILABLE_MODELS, conversationsDir, dataDir } from './constants';
+import { Message, ModelName } from './types';
 import { Stats } from 'fs';
 
 interface CliState {
   currentConversation: string | null;
+  selectedModel?: ModelName | null;
 }
 
 export async function deleteConversation(conversationId: string) {
@@ -51,6 +52,21 @@ export async function getConversationFiles(maxNum: number | undefined) {
     .slice(0, maxNum);
 }
 
+export async function patchState(partialState: Partial<CliState>) {
+  const state = await readState();
+  return fs.writeFile(
+    path.join(dataDir, './state.json'),
+    JSON.stringify({ ...state, ...partialState }),
+    { encoding: 'utf8' },
+  );
+}
+
+export function printModelInformation(selectedModel: string) {
+  process.stdout.write(
+    `Model in use: ${selectedModel}.\n\nAvailable models:\n- ${AVAILABLE_MODELS.join('\n- ')}\n`,
+  );
+}
+
 export async function readState(): Promise<CliState> {
   try {
     const file = await fs.readFile(path.join(dataDir, './state.json'), {
@@ -58,14 +74,6 @@ export async function readState(): Promise<CliState> {
     });
     return JSON.parse(file) as CliState;
   } catch {
-    return { currentConversation: null };
+    return { currentConversation: null, selectedModel: null };
   }
-}
-
-export function writeState(state: CliState) {
-  return fs.writeFile(
-    path.join(dataDir, './state.json'),
-    JSON.stringify(state),
-    { encoding: 'utf8' },
-  );
 }

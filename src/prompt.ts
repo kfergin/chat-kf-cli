@@ -3,16 +3,22 @@ import path from 'path';
 
 import { v4 as uuid } from 'uuid';
 
-import { conversationsDir } from './constants';
-import { getConversation, writeState } from './utils';
-import { Message } from './types';
+import { AVAILABLE_MODELS, conversationsDir } from './constants';
+import { getConversation, patchState } from './utils';
+import { Message, ModelName } from './types';
 import promptOpenai from './prompt-openai';
+import promptGoogleAI from './prompt-google-ai';
 
 interface PromptArgs {
   content: string;
   conversationId: string | null;
   fullConversation: boolean;
+  modelName: string;
   saveConversation: boolean;
+}
+
+function isValidModelName(modelName: string): modelName is ModelName {
+  return AVAILABLE_MODELS.includes(modelName as ModelName);
 }
 
 const FULL_CONVERSATION_DELIMITER = '---chat-delimiter---';
@@ -30,6 +36,7 @@ export default async function prompt({
   content,
   conversationId,
   fullConversation,
+  modelName,
   saveConversation,
 }: PromptArgs) {
   if (!content) {
@@ -46,6 +53,13 @@ export default async function prompt({
     process.exit(1);
   }
 
+  if (!isValidModelName(modelName)) {
+    process.stderr.write(
+      `Invalid model name. Available options: ${AVAILABLE_MODELS.join(', ')}\n`,
+    );
+    process.exit(1);
+  }
+
   process.stdout.write(
     `\n${
       fullConversation
@@ -55,6 +69,8 @@ export default async function prompt({
   );
 
   try {
+    await patchState({ selectedModel: modelName });
+
     const priorMessages: Message[] = fullConversation
       ? getMessagesFromFullConversation(content)
       : !conversationId
@@ -62,7 +78,10 @@ export default async function prompt({
         : await getConversation(conversationId).then(([messages]) => messages);
     const messages: Message[] = [...priorMessages, { role: 'user', content }];
 
-    const fullResponse = await promptOpenai({ messages });
+    const fullResponse =
+      modelName === 'gpt-4-turbo'
+        ? await promptOpenai({ messages })
+        : await promptGoogleAI({ messages });
 
     if (!fullConversation) {
       process.stdout.write('\n\n');
@@ -76,7 +95,7 @@ export default async function prompt({
     const convoId = conversationId || uuid();
     messages.push({ role: 'assistant', content: fullResponse });
 
-    await writeState({ currentConversation: convoId });
+    await patchState({ currentConversation: convoId });
     await fs.writeFile(
       path.join(conversationsDir, `./${convoId}.json`),
       JSON.stringify(messages),

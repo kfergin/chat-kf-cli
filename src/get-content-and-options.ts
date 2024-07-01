@@ -8,8 +8,10 @@ interface Options {
   listConversations: boolean;
   noSave: boolean;
   numConversationsListed: number | undefined;
+  selectedModel: string;
   tokenCount: boolean;
   viewConversation: boolean;
+  viewModel: boolean;
 }
 
 export default async function getContentAndOptions(): Promise<
@@ -54,8 +56,10 @@ export default async function getContentAndOptions(): Promise<
     listConversations: false,
     noSave: false,
     numConversationsListed: undefined,
+    selectedModel: state.selectedModel ?? 'gpt-4-turbo',
     tokenCount: false,
     viewConversation: false,
+    viewModel: false,
   };
 
   for (const flag of flags) {
@@ -89,11 +93,16 @@ export default async function getContentAndOptions(): Promise<
       if (shortMatch || longMatch) {
         options.numConversationsListed = parseInt(shortMatch || longMatch, 10);
       }
+    } else if (/^-m|^--model-name/.test(flag)) {
+      options.selectedModel =
+        flag.match(/^-m=(.+)/)?.[1] ??
+        flag.match(/^--model-name=(.+)/)?.[1] ??
+        '';
     } else if (/^-n|^--no-save/.test(flag)) {
       options.noSave = true;
     } else if (/^-t|^--token-count/.test(flag)) {
       options.tokenCount = true;
-    } else if (/^-v|^--view-conversation/.test(flag)) {
+    } else if (/^-v(=.*)?$|^--view-conversation/.test(flag)) {
       const [, shortMatch] = flag.match(/^-v=(.+)/) ?? [];
       const [, longMatch] = flag.match(/^--view-conversation=(.+)/) ?? [];
 
@@ -101,6 +110,8 @@ export default async function getContentAndOptions(): Promise<
       options.conversationId =
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         shortMatch ?? longMatch ?? state.currentConversation;
+    } else if (/^-vm|^--view-model/.test(flag)) {
+      options.viewModel = true;
     }
   }
 

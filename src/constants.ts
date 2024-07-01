@@ -1,9 +1,16 @@
 import path from 'path';
 
+import { ModelName } from './types';
+
 export const dataDir = path.join(__dirname, '../data/');
 export const conversationsDir = path.join(dataDir, './conversations/');
 
 export const isTerminal = process.stdout.isTTY;
+
+export const AVAILABLE_MODELS: ModelName[] = [
+  'gemini-1.5-flash',
+  'gpt-4-turbo',
+];
 
 export const HELP_MESSAGE = `Usage: kf-chat-cli [options] [message]
 
@@ -34,6 +41,12 @@ Options:
                 Lists all available conversations. If a number is provided,
                 the application will only list that amount of conversations.
 
+  -m, --model-name=<name>
+                Specifies the model to use for the conversation. The default
+                model is "gpt-4-turbo".
+
+                Available models:${AVAILABLE_MODELS.map((model) => `\n                - ${model}`).join('')}
+
   -n, --no-save
                 Disables saving a new conversation or continuation of an
                 existing conversation. The default is to save.
@@ -45,6 +58,9 @@ Options:
   -v, --view-conversation=<id>
                 Views a particular conversation given its ID. If no ID is
                 provided, the application will use the current conversation.
+
+  -vm --view-model
+                Views the model currently in use.
 
 Examples:
   kf-chat-cli -c "Hello world"

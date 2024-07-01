@@ -4,6 +4,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 
 import { HELP_MESSAGE, conversationsDir, dataDir } from './constants';
+import { printModelInformation } from './utils';
 
 import getContentAndOptions from './get-content-and-options';
 import prompt from './prompt';
@@ -35,6 +36,11 @@ async function main() {
     process.exit(0);
   }
 
+  if (options.viewModel) {
+    printModelInformation(options.selectedModel);
+    process.exit(0);
+  }
+
   if (options.listConversations) {
     await listConversations(options.numConversationsListed);
     process.exit(0);
@@ -59,6 +65,7 @@ async function main() {
     content,
     conversationId: options.conversationId,
     fullConversation: options.fullConversation,
+    modelName: options.selectedModel,
     saveConversation: !options.noSave,
   });
 }
