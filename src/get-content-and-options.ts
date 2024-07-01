@@ -71,13 +71,11 @@ export default async function getContentAndOptions(): Promise<
         flag.match(/^--continue-conversation=(.+)/)?.[1] ??
         state.currentConversation;
     } else if (/^-d|^--delete-conversation/.test(flag)) {
-      const [, shortMatch] = flag.match(/^-d=(.+)/) ?? [];
-      const [, longMatch] = flag.match(/^--delete-conversation=(.+)/) ?? [];
-
       options.deleteConversation = true;
       options.conversationId =
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        shortMatch ?? longMatch ?? state.currentConversation;
+        flag.match(/^-d=(.+)/)?.[1] ??
+        flag.match(/^--delete-conversation=(.+)/)?.[1] ??
+        state.currentConversation;
       // eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with
     } else if (/^--full-conversation/.test(flag)) {
       options.fullConversation = true;
