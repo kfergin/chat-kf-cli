@@ -18,6 +18,7 @@ export default function countContentTokens(content: string, modelName: string) {
     process.exit(1);
   }
 
+  // @ts-expect-error tiktoken's types are not up to date
   const encoding = encoding_for_model(modelName);
   const tokenCount = encoding.encode(content).length;
   encoding.free();
