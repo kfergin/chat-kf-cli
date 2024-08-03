@@ -24,7 +24,7 @@
     "dotenv": "^16.4.5",
     "openai": "^4.54.0",
     "tiktoken": "^1.0.15",
-    "typescript": "^5.5.2",
+    "typescript": "^5.5.4",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
