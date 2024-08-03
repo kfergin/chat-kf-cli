@@ -22,7 +22,7 @@ export default async function promptOpenai({
     messages,
     model: modelName,
     stream: true,
-    // temperature: 0,
+    temperature: 0,
     // max_tokens: maxTokensResponse,
   });
 
