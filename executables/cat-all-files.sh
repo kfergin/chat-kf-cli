@@ -2,11 +2,42 @@
 
 is_preview=false
 file_to_save=
+more_filter=""
 
-if [ "$1" = "-p" ]; then
-  is_preview=true
-else 
-  file_to_save="$1"
+usage() {
+    echo "Usage: $0 [-h] [--help] [--filter value] [new-file value] [--preview]"
+    echo "  -f value Filter out files with string. Treated as regex."
+    echo "  -h       Display this help message"
+    echo "  -p       Preview files that would be concatenated."
+    echo "  -s value Path to file to create."
+    exit 1
+}
+
+# Parse command-line options
+while getopts "f:hps:" opt; do
+  case $opt in
+    f)
+      more_filter=$OPTARG
+      ;;
+    h)
+      usage
+      ;;
+    p)
+      is_preview=true
+      ;;
+    s)
+      file_to_save=$OPTARG
+      ;;
+    *)
+      usage
+      ;;
+  esac
+done
+
+# Shift off the options and optional --.
+shift "$((OPTIND-1))"
+
+if [ "$is_preview" != true ]; then
   if [ -z "$file_to_save" ]; then
     echo "Please provide a file to save the output"
     exit 1
@@ -17,8 +48,6 @@ else
     exit 1
   fi
 fi
-
-more_filter="$2"
 
 if [ -n "$more_filter" ]; then
   more_filter="|$more_filter"
