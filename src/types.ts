@@ -7,6 +7,11 @@ export interface Message {
 export type GoogleAIModelName = 'gemini-1.5-flash' | 'gemini-1.5-pro';
 export type OpenAIModelName = Extract<
   OpenAI.Chat.ChatModel,
-  'gpt-4-turbo' | 'gpt-4o' | 'gpt-4o-mini' | 'gpt-3.5-turbo'
+  | 'gpt-4-turbo'
+  | 'gpt-4o'
+  | 'gpt-4o-mini'
+  | 'gpt-3.5-turbo'
+  | 'o1-mini'
+  | 'o1-preview'
 >;
 export type ModelName = OpenAIModelName | GoogleAIModelName;

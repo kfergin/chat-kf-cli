@@ -20,6 +20,8 @@ export const AVAILABLE_OPENAI_MODELS: OpenAIModelName[] = [
   'gpt-4o', // 128,000 tokens - $5.00 / 1M input tokens - Up to Oct 2023
   'gpt-4o-mini', // 128,000 tokens - $0.600 / 1M output tokens - Up to Oct 2023
   'gpt-3.5-turbo', // 16,385 tokens - $0.50 / 1M input tokens - Up to Sep 2021
+  'o1-mini', // 128,000 tokens - $3.00 / 1M input tokens - $12.00 / 1M output tokens - Up to Oct 2023
+  'o1-preview', // 128,000 tokens - $15.00 / 1M input tokens - $60.00 / 1M output tokens - Up to Oct 2023
 ];
 export const AVAILABLE_MODELS: ModelName[] = [
   ...AVAILABLE_GOOGLE_AI_MODELS,
