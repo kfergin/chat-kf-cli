@@ -67,7 +67,7 @@ Options:
                 Disables saving a new conversation or continuation of an
                 existing conversation. The default is to save.
 
-   -s, --set-model=<name>
+  -s, --set-model=<name>
                 Sets the model to use for the conversation. This option
                 will save the model for future conversations.
 
