@@ -90,7 +90,15 @@ export async function patchState(partialState: Partial<CliState>) {
 
 export function printModelInformation(selectedModel: string) {
   process.stdout.write(
-    `Model in use: ${selectedModel}.\n\nAvailable models:\n- ${AVAILABLE_MODELS.join('\n- ')}\n`,
+    `Model in use: ${selectedModel}.
+
+Available models:\n- ${AVAILABLE_MODELS.join('\n- ')}
+
+Pricing:
+- https://www.anthropic.com/pricing#anthropic-api
+- https://openai.com/api/pricing
+- https://ai.google.dev/pricing
+`,
   );
 }
 
