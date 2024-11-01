@@ -1,9 +1,15 @@
+import Anthropic from '@anthropic-ai/sdk';
 import OpenAI from 'openai';
+
 export interface Message {
   role: 'assistant' | 'user';
   content: string;
 }
 
+export type AnthropicAIModelName = Extract<
+  Anthropic.Messages.Model,
+  'claude-3-5-sonnet-latest' | 'claude-3-opus-latest'
+>;
 export type GoogleAIModelName = 'gemini-1.5-flash' | 'gemini-1.5-pro';
 export type OpenAIModelName = Extract<
   OpenAI.Chat.ChatModel,
@@ -14,4 +20,7 @@ export type OpenAIModelName = Extract<
   | 'o1-mini'
   | 'o1-preview'
 >;
-export type ModelName = OpenAIModelName | GoogleAIModelName;
+export type ModelName =
+  | AnthropicAIModelName
+  | OpenAIModelName
+  | GoogleAIModelName;

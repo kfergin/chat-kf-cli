@@ -2,12 +2,18 @@ import fs from 'fs/promises';
 import path from 'path';
 
 import {
+  AVAILABLE_GOOGLE_AI_MODELS,
   AVAILABLE_MODELS,
   AVAILABLE_OPENAI_MODELS,
   conversationsDir,
   dataDir,
 } from './constants';
-import { Message, ModelName, OpenAIModelName } from './types';
+import {
+  GoogleAIModelName,
+  Message,
+  ModelName,
+  OpenAIModelName,
+} from './types';
 import { Stats } from 'fs';
 
 interface CliState {
@@ -22,6 +28,12 @@ export async function deleteConversation(conversationId: string) {
 
 export function isValidModelName(modelName: string): modelName is ModelName {
   return AVAILABLE_MODELS.includes(modelName as ModelName);
+}
+
+export function isValidGoogleAiModelName(
+  modelName: string,
+): modelName is GoogleAIModelName {
+  return AVAILABLE_GOOGLE_AI_MODELS.includes(modelName as GoogleAIModelName);
 }
 
 export function isValidOpenAiModelName(

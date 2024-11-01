@@ -9,10 +9,12 @@ import {
   getConversation,
   patchState,
   isValidOpenAiModelName,
+  isValidGoogleAiModelName,
 } from './utils';
 import { Message } from './types';
 import promptOpenai from './prompt-openai';
 import promptGoogleAI from './prompt-google-ai';
+import promptAnthropicAi from './prompt-anthropic-ai';
 
 interface PromptArgs {
   content: string;
@@ -79,9 +81,14 @@ export default async function prompt({
         : await getConversation(conversationId).then(([messages]) => messages);
     const messages: Message[] = [...priorMessages, { role: 'user', content }];
 
-    const fullResponse = isValidOpenAiModelName(modelName)
-      ? await promptOpenai({ messages, modelName })
-      : await promptGoogleAI({ messages, modelName });
+    let fullResponse;
+    if (isValidOpenAiModelName(modelName)) {
+      fullResponse = await promptOpenai({ messages, modelName });
+    } else if (isValidGoogleAiModelName(modelName)) {
+      fullResponse = await promptGoogleAI({ messages, modelName });
+    } else {
+      fullResponse = await promptAnthropicAi({ messages, modelName });
+    }
 
     if (!isFullConversation) {
       process.stdout.write('\n\n');
