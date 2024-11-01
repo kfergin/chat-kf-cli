@@ -3,7 +3,7 @@ import { readState } from './utils';
 interface Options {
   conversationId: string | null;
   deleteConversation: boolean;
-  fullConversation: boolean;
+  isFullConversation: boolean;
   help: boolean;
   listConversations: boolean;
   noSave: boolean;
@@ -52,7 +52,7 @@ export default async function getContentAndOptions(): Promise<
   const options: Options = {
     conversationId: null,
     deleteConversation: false,
-    fullConversation: false,
+    isFullConversation: false,
     help: false,
     listConversations: false,
     noSave: false,
@@ -77,7 +77,7 @@ export default async function getContentAndOptions(): Promise<
         flag.match(/^--delete-conversation=(.+)/)?.[1] ??
         state.currentConversation;
     } else if (/^--full-conversation/.test(flag)) {
-      options.fullConversation = true;
+      options.isFullConversation = true;
       options.noSave = true;
     } else if (/^-h|^--help/.test(flag)) {
       options.help = true;

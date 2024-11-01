@@ -17,7 +17,7 @@ import promptGoogleAI from './prompt-google-ai';
 interface PromptArgs {
   content: string;
   conversationId: string | null;
-  fullConversation: boolean;
+  isFullConversation: boolean;
   modelName: string;
   saveConversation: boolean;
 }
@@ -36,7 +36,7 @@ function getMessagesFromFullConversation(fullContent: string): Message[] {
 export default async function prompt({
   content,
   conversationId,
-  fullConversation,
+  isFullConversation,
   modelName,
   saveConversation,
 }: PromptArgs) {
@@ -47,7 +47,7 @@ export default async function prompt({
     process.exit(1);
   }
 
-  if (fullConversation && saveConversation) {
+  if (isFullConversation && saveConversation) {
     process.stderr.write(
       'You cannot save a full conversation. --full-conversation assumes the conversation is stored elsewhere, e.g. a file or buffer.\n',
     );
@@ -63,7 +63,7 @@ export default async function prompt({
 
   process.stdout.write(
     `\n${
-      fullConversation
+      isFullConversation
         ? FULL_CONVERSATION_DELIMITER
         : String.fromCodePoint(0x1f916)
     }\n\n`,
@@ -72,7 +72,7 @@ export default async function prompt({
   try {
     await patchState({ selectedModel: modelName });
 
-    const priorMessages: Message[] = fullConversation
+    const priorMessages: Message[] = isFullConversation
       ? getMessagesFromFullConversation(content)
       : !conversationId
         ? []
@@ -83,7 +83,7 @@ export default async function prompt({
       ? await promptOpenai({ messages, modelName })
       : await promptGoogleAI({ messages, modelName });
 
-    if (!fullConversation) {
+    if (!isFullConversation) {
       process.stdout.write('\n\n');
     } else {
       process.stdout.write(`\n\n${FULL_CONVERSATION_DELIMITER}\n\n`);

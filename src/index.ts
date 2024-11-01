@@ -70,7 +70,7 @@ async function main() {
   await prompt({
     content,
     conversationId: options.conversationId,
-    fullConversation: options.fullConversation,
+    isFullConversation: options.isFullConversation,
     modelName: options.selectedModel,
     saveConversation: !options.noSave,
   });
