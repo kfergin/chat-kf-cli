@@ -3,8 +3,8 @@ import { readState } from './utils';
 interface Options {
   conversationId: string | null;
   deleteConversation: boolean;
-  isFullConversation: boolean;
   help: boolean;
+  isFullConversation: boolean;
   listConversations: boolean;
   noSave: boolean;
   numConversationsListed: number | undefined;
@@ -52,8 +52,8 @@ export default async function getContentAndOptions(): Promise<
   const options: Options = {
     conversationId: null,
     deleteConversation: false,
-    isFullConversation: false,
     help: false,
+    isFullConversation: false,
     listConversations: false,
     noSave: false,
     numConversationsListed: undefined,
