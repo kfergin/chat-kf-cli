@@ -16,6 +16,7 @@ export const DEFAULT_MODEL = 'gpt-4-turbo';
 // https://docs.anthropic.com/en/docs/about-claude/models
 // https://www.anthropic.com/pricing#anthropic-api
 const AVAILABLE_ANTHROPIC_AI_MODELS: AnthropicAIModelName[] = [
+  'claude-3-7-sonnet-latest',
   'claude-3-5-sonnet-latest',
   'claude-3-opus-latest',
 ];

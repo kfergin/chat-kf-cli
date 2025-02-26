@@ -8,7 +8,9 @@ export interface Message {
 
 export type AnthropicAIModelName = Extract<
   Anthropic.Messages.Model,
-  'claude-3-5-sonnet-latest' | 'claude-3-opus-latest'
+  | 'claude-3-7-sonnet-latest'
+  | 'claude-3-5-sonnet-latest'
+  | 'claude-3-opus-latest'
 >;
 export type GoogleAIModelName = 'gemini-1.5-flash' | 'gemini-1.5-pro';
 export type OpenAIModelName = Extract<
