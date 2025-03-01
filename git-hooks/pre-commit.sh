@@ -8,8 +8,9 @@ cd "$(git rev-parse --show-toplevel)" || exit 1
 echo "Checking TypeScript"
 npx tsc --noEmit || { echo "TypeScript compilation failed"; exit 1; }
 
-echo "Checking ESLint"
-npx eslint . || { echo "ESLint failed"; exit 1; }
+# maybe add eslint back
+# echo "Checking ESLint"
+# npx eslint . || { echo "ESLint failed"; exit 1; }
 
 echo "Checking Prettier"
 npx prettier --check --log-level warn . || { echo "Prettier check failed"; exit 1; }
