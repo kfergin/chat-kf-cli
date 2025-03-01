@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/kfergin/chat-kf-cli#readme",
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.37.0",
+    "@anthropic-ai/sdk": "^0.39.0",
     "@google/generative-ai": "^0.19.0",
     "dotenv": "^16.4.5",
     "openai": "^4.61.0",
