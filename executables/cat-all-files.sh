@@ -1,66 +1,63 @@
 #!/bin/bash
 
-is_preview=false
-file_to_save=
-more_filter=""
+# Default output file
+file_to_save="concatenated-files.txt"
+show_help=false
 
-usage() {
-    echo "Usage: $0 [-h] [--help] [--filter value] [new-file value] [--preview]"
-    echo "  -f value Filter out files with string. Treated as regex."
-    echo "  -h       Display this help message"
-    echo "  -p       Preview files that would be concatenated."
-    echo "  -s value Path to file to create."
-    exit 1
-}
-
-# Parse command-line options
-while getopts "f:hps:" opt; do
-  case $opt in
-    f)
-      more_filter=$OPTARG
+# Process command line arguments
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -o|--output)
+      file_to_save="$2"
+      shift 2
       ;;
-    h)
-      usage
-      ;;
-    p)
-      is_preview=true
-      ;;
-    s)
-      file_to_save=$OPTARG
+    -h|--help)
+      show_help=true
+      shift
       ;;
     *)
-      usage
+      echo "Unknown option: $1"
+      exit 1
       ;;
   esac
 done
 
-# Shift off the options and optional --.
-shift "$((OPTIND-1))"
+# Display help message
+if [[ "$show_help" = true ]]; then
+  cat << EOF
+Usage: ./$(basename "$0") [OPTIONS]
 
-if [ "$is_preview" != true ]; then
-  if [ -z "$file_to_save" ]; then
-    echo "Please provide a file to save the output"
-    exit 1
-  fi
-  
-  if [ -f "$file_to_save" ]; then
-    echo "File already exists. Please provide a new file"
-    exit 1
-  fi
+This script concatenates the content of files provided via stdin, adding file paths as headers.
+
+Options:
+  -o, --output FILE    Specify the output file (default: concatenated-files.txt)
+  -h, --help           Display this help message and exit
+
+Examples:
+  git ls-files '*.js' | ./$(basename "$0")
+  git ls-files | grep -v tests | ./$(basename "$0") -o output.txt
+  find . | ./$(basename "$0")
+
+EOF
+  exit 0
 fi
 
-if [ -n "$more_filter" ]; then
-  more_filter="|$more_filter"
+# Check if there's input from stdin
+if [ -t 0 ]; then
+  echo "Error: No input provided. Please pipe a list of files to this script."
+  echo "For help, run: ./$(basename "$0") --help"
+  exit 1
 fi
 
-while IFS= read -r -d $'\0' file; do
-  regex="(\.git/|\.DS_Store|node_modules|dist|package-lock\.json$more_filter)"
-  if [[ $file =~ $regex ]]; then
-    continue
-  fi
+# Create or clear the output file
+> "$file_to_save"
 
-  if [ "$is_preview" = true ]; then
-    echo "$file"
+# Process each file
+count=0
+while IFS= read -r file; do
+  # Skip if not a regular file or not readable
+  if [[ ! -f "$file" || ! -r "$file" ]]; then
+    echo "Warning: Skipping '$file' (not a regular file or not readable)" >&2
     continue
   fi
 
@@ -72,4 +69,8 @@ while IFS= read -r -d $'\0' file; do
     echo ""
     echo ""
   } >> "$file_to_save"
-done < <(find . -type f -print0)
+
+  ((count++))
+done
+
+echo "Successfully processed $count files. Output saved to '$file_to_save'"
