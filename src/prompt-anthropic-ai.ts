@@ -11,7 +11,7 @@ export default async function promptAnthropicAi({
   messages,
   modelName,
 }: PromptAnthropicaiArgs) {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env['ANTHROPIC_API_KEY'];
   if (!apiKey) {
     throw Error(
       'Please provide an Anthropic API key in the ANTHROPIC_API_KEY environment variable.\n',

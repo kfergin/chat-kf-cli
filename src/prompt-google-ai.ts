@@ -11,7 +11,7 @@ export default async function promptGoogleAI({
   messages,
   modelName,
 }: PromptGoogleAIArgs) {
-  const apiKey = process.env.GOOGLE_API_KEY;
+  const apiKey = process.env['GOOGLE_API_KEY'];
   if (!apiKey) {
     throw Error(
       'Please provide a Google API key in the GOOGLE_API_KEY environment variable.\n',

@@ -10,7 +10,7 @@ export default async function promptOpenai({
   messages,
   modelName,
 }: PromptOpenaiArgs) {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env['OPENAI_API_KEY'];
   if (!apiKey) {
     throw Error(
       'Please provide an OpenAI API key in the OPENAI_API_KEY environment variable.\n',
