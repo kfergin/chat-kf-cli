@@ -6,6 +6,12 @@
 # example usage:
 # `echo "Hello, world" | ./simple-curl-example-sonnet.sh`
 
+if ! command -v jq &> /dev/null; then
+    echo "Error: jq is required but not installed. Please install jq first." >&2
+    echo "Installation instructions: https://stedolan.github.io/jq/download/" >&2
+    exit 1
+fi
+
 read -r content_input
 
 curl https://api.anthropic.com/v1/messages \
