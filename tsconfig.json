@@ -1,5 +1,25 @@
 {
   "compilerOptions": {
+    /* Type Checking */
+    "strict": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitThis": true,
+    /* "noPropertyAccessFromIndexSignature": true, */
+    /* "noUncheckedIndexedAccess": true, */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "useUnknownInCatchVariables": true,
+
+    /* Output Formatting */
+    "noErrorTruncation": true,
+
+    /* Completeness */
+    "skipLibCheck": true,
+
     "target": "es6",
     "module": "commonjs",
     "strict": true,
