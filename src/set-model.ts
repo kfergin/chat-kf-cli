@@ -2,13 +2,20 @@ import { AVAILABLE_MODELS } from './constants';
 import { isValidModelName, patchState } from './utils';
 
 export default async function setModel(modelNameMatch: string) {
-  const modelToSet = isValidModelName(modelNameMatch)
-    ? modelNameMatch
-    : AVAILABLE_MODELS.find((model) => model.includes(modelNameMatch));
+  const modelToSet = /^\s*$/.test(modelNameMatch)
+    ? undefined
+    : isValidModelName(modelNameMatch)
+      ? modelNameMatch
+      : AVAILABLE_MODELS.find((model) =>
+          modelNameMatch.split(',').every((part) => model.includes(part)),
+        );
 
   if (!modelToSet) {
     process.stderr.write(
-      `No matching model. Available options: ${AVAILABLE_MODELS.join(', ')}\n`,
+      `No matching model for "${modelNameMatch}".
+
+Available models:\n- ${AVAILABLE_MODELS.join('\n- ')}
+`,
     );
     process.exit(1);
   }
