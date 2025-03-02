@@ -25,7 +25,7 @@ export default function countContentTokens(content: string, modelName: string) {
   const costPerTokenInMillicents = 1; // 1¢ / 1K Tokens
   const exactCostInCents = (tokenCount * costPerTokenInMillicents) / 1000;
   const totalNumDigets =
-    String(exactCostInCents).match(/\.(\d+)/)?.[1].length ?? 0;
+    String(exactCostInCents).match(/\.(\d+)/)?.[1]?.length ?? 0;
   let digits = 3;
   let costInCents = exactCostInCents.toFixed(digits);
   while (digits <= totalNumDigets && /\.0+$/.test(String(costInCents))) {

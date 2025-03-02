@@ -9,7 +9,7 @@
     "noImplicitOverride": true,
     "noImplicitThis": true,
     "noPropertyAccessFromIndexSignature": true,
-    /* "noUncheckedIndexedAccess": true, */
+    "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "useUnknownInCatchVariables": true,

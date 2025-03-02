@@ -18,11 +18,15 @@ export default async function promptGoogleAI({
     );
   }
 
-  const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: modelName });
-
   const priorMessages = messages.length > 1 ? messages.slice(0, -1) : [];
   const lastMessage = messages[messages.length - 1];
+
+  if (!lastMessage) {
+    throw Error('promptGoogleAI() was called with zero messages.');
+  }
+
+  const genAI = new GoogleGenerativeAI(apiKey);
+  const model = genAI.getGenerativeModel({ model: modelName });
 
   // https://ai.google.dev/gemini-api/docs/get-started/tutorial?lang=node
   const chat = model.startChat({

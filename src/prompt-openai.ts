@@ -29,7 +29,7 @@ export default async function promptOpenai({
   let fullResponse = '';
 
   for await (const chunk of completion) {
-    const content = chunk.choices[0].delta.content;
+    const content = chunk.choices[0]?.delta.content;
     // e.g.
     // `choices: [ { index: 0, delta: { content: '.' }, finish_reason: null } ]`
     // `choices: [ { index: 0, delta: {}, finish_reason: 'stop' } ]`

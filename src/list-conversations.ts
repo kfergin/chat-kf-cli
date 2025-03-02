@@ -15,9 +15,13 @@ export default async function listConversations(
     const conversation = JSON.parse(
       await fs.readFile(fileInfo.fullPath, { encoding: 'utf8' }),
     ) as Message[];
-    let firstMessageLine = conversation[0].content.trim().split('\n')[0];
+    let firstMessageLine = conversation[0]?.content.trim().split('\n')[0];
 
-    if (isTerminal && firstMessageLine.length > process.stdout.columns) {
+    if (
+      isTerminal &&
+      firstMessageLine &&
+      firstMessageLine.length > process.stdout.columns
+    ) {
       firstMessageLine = firstMessageLine.slice(0, process.stdout.columns + 1);
     }
 

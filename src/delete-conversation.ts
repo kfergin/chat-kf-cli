@@ -39,7 +39,7 @@ export default async function deleteConversation(
   let firstMessage;
   try {
     firstMessage = await getConversation(conversationId).then(([messages]) =>
-      messages[0].content.trim(),
+      messages[0]?.content.trim(),
     );
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
@@ -69,7 +69,7 @@ Are you sure you want delete this conversation? yes/no: `,
   if (conversationId === currentConversation) {
     const [lastModified] = await getConversationFiles(1);
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    await patchState({ currentConversation: lastModified.id ?? null });
+    await patchState({ currentConversation: lastModified?.id ?? null });
   }
 
   if (isTerminal) {
