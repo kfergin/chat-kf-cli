@@ -13,7 +13,7 @@ if ! command -v jq &> /dev/null; then
     exit 1
 fi
 
-read -r content_input
+content_input=$(cat)
 
 curl --no-buffer --silent https://api.anthropic.com/v1/messages \
      --header "x-api-key: $ANTHROPIC_API_KEY" \
