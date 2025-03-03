@@ -39,18 +39,3 @@ curl --no-buffer --silent https://api.anthropic.com/v1/messages \
     fi
 done
 echo # Add newline at the end
-
-# count_tokens example
-# https://docs.anthropic.com/en/api/messages-count-tokens
-#
-# curl https://api.anthropic.com/v1/messages/count_tokens \
-#      --header "x-api-key: $ANTHROPIC_API_KEY" \
-#      --header "anthropic-version: 2023-06-01" \
-#      --header "content-type: application/json" \
-#      --data \
-# '{
-#     "model": "claude-3-5-sonnet-latest",
-#     "messages": [
-#         {"role": "user", "content": "Hello, world"}
-#     ]
-# }'
