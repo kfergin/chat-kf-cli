@@ -12,7 +12,9 @@ export type AnthropicAIModelName = Extract<
   | 'claude-3-5-sonnet-latest'
   | 'claude-3-opus-latest'
 >;
+
 export type GoogleAIModelName = 'gemini-1.5-flash' | 'gemini-1.5-pro';
+
 export type OpenAIModelName = Extract<
   OpenAI.Chat.ChatModel,
   | 'gpt-4-turbo'
@@ -22,6 +24,7 @@ export type OpenAIModelName = Extract<
   | 'o1-mini'
   | 'o1-preview'
 >;
+
 export type ModelName =
   | AnthropicAIModelName
   | OpenAIModelName
