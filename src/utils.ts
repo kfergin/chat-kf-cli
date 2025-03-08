@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 
 import {
+  AVAILABLE_ANTHROPIC_AI_MODELS,
   AVAILABLE_GOOGLE_AI_MODELS,
   AVAILABLE_MODELS,
   AVAILABLE_OPENAI_MODELS,
@@ -9,6 +10,7 @@ import {
   dataDir,
 } from './constants';
 import {
+  AnthropicAIModelName,
   GoogleAIModelName,
   Message,
   ModelName,
@@ -28,6 +30,14 @@ export async function deleteConversation(conversationId: string) {
 
 export function isValidModelName(modelName: string): modelName is ModelName {
   return AVAILABLE_MODELS.includes(modelName as ModelName);
+}
+
+export function isValidAnthropicAiModelName(
+  modelName: string,
+): modelName is AnthropicAIModelName {
+  return AVAILABLE_ANTHROPIC_AI_MODELS.includes(
+    modelName as AnthropicAIModelName,
+  );
 }
 
 export function isValidGoogleAiModelName(

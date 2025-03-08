@@ -10,11 +10,13 @@ import {
   patchState,
   isValidOpenAiModelName,
   isValidGoogleAiModelName,
+  isValidAnthropicAiModelName,
 } from './utils';
 import { Message } from './types';
 import promptOpenai from './prompt-openai';
 import promptGoogleAI from './prompt-google-ai';
 import promptAnthropicAi from './prompt-anthropic-ai';
+import promptOllama from './prompt-ollama';
 
 interface PromptArgs {
   content: string;
@@ -86,8 +88,10 @@ export default async function prompt({
       fullResponse = await promptOpenai({ messages, modelName });
     } else if (isValidGoogleAiModelName(modelName)) {
       fullResponse = await promptGoogleAI({ messages, modelName });
-    } else {
+    } else if (isValidAnthropicAiModelName(modelName)) {
       fullResponse = await promptAnthropicAi({ messages, modelName });
+    } else {
+      fullResponse = await promptOllama({ messages, modelName });
     }
 
     if (!isFullConversation) {

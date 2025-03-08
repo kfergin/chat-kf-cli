@@ -4,6 +4,7 @@ import {
   AnthropicAIModelName,
   GoogleAIModelName,
   ModelName,
+  OllamaModelName,
   OpenAIModelName,
 } from './types';
 
@@ -16,7 +17,7 @@ export const DEFAULT_MODEL = 'gpt-4-turbo';
 
 // https://docs.anthropic.com/en/docs/about-claude/models
 // https://www.anthropic.com/pricing#anthropic-api
-const AVAILABLE_ANTHROPIC_AI_MODELS: AnthropicAIModelName[] = [
+export const AVAILABLE_ANTHROPIC_AI_MODELS: AnthropicAIModelName[] = [
   'claude-3-7-sonnet-latest',
   'claude-3-5-sonnet-latest',
   'claude-3-opus-latest',
@@ -27,6 +28,8 @@ export const AVAILABLE_GOOGLE_AI_MODELS: GoogleAIModelName[] = [
   'gemini-1.5-flash', // 1M+ tokens - Free - May 2024 (last update)
   'gemini-1.5-pro', // 2M+ tokens - Free - May 2024 (last update)
 ];
+
+const AVAILABLE_OLLAMA_MODELS: OllamaModelName[] = ['llama3.2:latest'];
 
 // https://platform.openai.com/docs/models
 // https://openai.com/api/pricing/
@@ -42,6 +45,7 @@ export const AVAILABLE_OPENAI_MODELS: OpenAIModelName[] = [
 export const AVAILABLE_MODELS: ModelName[] = [
   ...AVAILABLE_ANTHROPIC_AI_MODELS,
   ...AVAILABLE_GOOGLE_AI_MODELS,
+  ...AVAILABLE_OLLAMA_MODELS,
   ...AVAILABLE_OPENAI_MODELS,
 ];
 

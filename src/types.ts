@@ -15,6 +15,10 @@ export type AnthropicAIModelName = Extract<
 
 export type GoogleAIModelName = 'gemini-1.5-flash' | 'gemini-1.5-pro';
 
+// Ollama model names depend on what models are installed through ollama.
+// To view models, run `ollama ls`.
+export type OllamaModelName = 'llama3.2:latest';
+
 export type OpenAIModelName = Extract<
   OpenAI.Chat.ChatModel,
   | 'gpt-4-turbo'
@@ -27,5 +31,6 @@ export type OpenAIModelName = Extract<
 
 export type ModelName =
   | AnthropicAIModelName
+  | OllamaModelName
   | OpenAIModelName
   | GoogleAIModelName;
