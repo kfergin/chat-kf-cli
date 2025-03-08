@@ -27,7 +27,13 @@ async function main() {
   } catch {
     // we could add this check: `error.code === 'ENOENT'`
     // I think it's fine though
-    await Promise.all([fs.mkdir(dataDir), fs.mkdir(conversationsDir)]);
+    await fs.mkdir(dataDir);
+  }
+
+  try {
+    await fs.access(conversationsDir);
+  } catch {
+    await fs.mkdir(conversationsDir);
   }
 
   const [content, options] = await getContentAndOptions();
