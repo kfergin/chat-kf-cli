@@ -23,7 +23,8 @@ export default async function promptAnthropicAi({
   const stream = await anthropic.messages.create({
     stream: true,
     model: modelName,
-    max_tokens: 1000,
+    // https://docs.anthropic.com/en/docs/about-claude/models/all-models
+    max_tokens: 8192,
     temperature: 0,
     // system: 'Respond only with short poems.',
     messages,
