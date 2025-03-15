@@ -51,7 +51,7 @@ export default async function prompt({
     process.exit(1);
   }
 
-  if (isFullConversation && saveConversation) {
+  if (isFullConversation && (saveConversation || conversationId)) {
     process.stderr.write(
       'You cannot save a full conversation. --full-conversation assumes the conversation is stored elsewhere, e.g. a file or buffer.\n',
     );
@@ -76,12 +76,12 @@ export default async function prompt({
   try {
     await patchState({ selectedModel: modelName });
 
-    const priorMessages: Message[] = isFullConversation
+    const priorMessages: Message[] = !conversationId
+      ? []
+      : await getConversation(conversationId).then(([messages]) => messages);
+    const messages: Message[] = isFullConversation
       ? getMessagesFromFullConversation(content)
-      : !conversationId
-        ? []
-        : await getConversation(conversationId).then(([messages]) => messages);
-    const messages: Message[] = [...priorMessages, { role: 'user', content }];
+      : [...priorMessages, { role: 'user', content }];
 
     let fullResponse;
     if (isValidOpenAiModelName(modelName)) {
