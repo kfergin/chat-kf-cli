@@ -76,12 +76,13 @@ export default async function prompt({
   try {
     await patchState({ selectedModel: modelName });
 
-    const priorMessages: Message[] = !conversationId
+    const savedMessages: Message[] = !conversationId
       ? []
       : await getConversation(conversationId).then(([messages]) => messages);
+
     const messages: Message[] = isFullConversation
       ? getMessagesFromFullConversation(content)
-      : [...priorMessages, { role: 'user', content }];
+      : [...savedMessages, { role: 'user', content }];
 
     let fullResponse;
     if (isValidOpenAiModelName(modelName)) {
