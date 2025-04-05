@@ -1,14 +1,12 @@
 import { AVAILABLE_MODELS } from './constants';
-import { isValidModelName, patchState } from './utils';
+import { patchState } from './utils';
 
 export default async function setModel(modelNameMatch: string) {
   const modelToSet = /^\s*$/.test(modelNameMatch)
     ? undefined
-    : isValidModelName(modelNameMatch)
-      ? modelNameMatch
-      : AVAILABLE_MODELS.find((model) =>
-          modelNameMatch.split(',').every((part) => model.includes(part)),
-        );
+    : AVAILABLE_MODELS.find((model) =>
+        modelNameMatch.split(',').every((part) => model.includes(part)),
+      );
 
   if (!modelToSet) {
     process.stderr.write(

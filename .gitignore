@@ -1,5 +1,8 @@
 node_modules
 dist
-data
-.env
 .DS_Store
+
+# cli-related
+.env
+data
+ollama-models.txt

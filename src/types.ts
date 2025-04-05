@@ -17,7 +17,7 @@ export type GoogleAIModelName = 'gemini-1.5-flash' | 'gemini-1.5-pro';
 
 // Ollama model names depend on what models are installed through ollama.
 // To view models, run `ollama ls`.
-export type OllamaModelName = 'llama3.2:latest';
+export type OllamaModelName = string;
 
 export type OpenAIModelName = Extract<
   OpenAI.Chat.ChatModel,

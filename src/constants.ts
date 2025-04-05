@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 
 import {
@@ -29,7 +30,18 @@ export const AVAILABLE_GOOGLE_AI_MODELS: GoogleAIModelName[] = [
   'gemini-1.5-pro', // 2M+ tokens - Free - May 2024 (last update)
 ];
 
-const AVAILABLE_OLLAMA_MODELS: OllamaModelName[] = ['llama3.2:latest'];
+const AVAILABLE_OLLAMA_MODELS: OllamaModelName[] = (() => {
+  try {
+    const filePath = path.join(__dirname, '../ollama-models.txt');
+    const content = fs.readFileSync(filePath, 'utf8');
+    return content
+      .split('\n')
+      .map((line) => line.trim())
+      .filter(Boolean);
+  } catch (error) {
+    return [];
+  }
+})();
 
 // https://platform.openai.com/docs/models
 // https://openai.com/api/pricing/
