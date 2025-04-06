@@ -180,6 +180,40 @@ echo "Hello, world" | ./simple-curl-example-sonnet.sh
 Anthropic scripts require an `ANTHROPIC_API_KEY` environment variable to be
 set.
 
+## Neovim integration
+
+This is the keymap I use to chat in a buffer:
+
+```lua
+vim.keymap.set('n', '<leader>l', function()
+  local buf = vim.api.nvim_get_current_buf()
+  local buf_lines = vim.api.nvim_buf_get_lines(buf, 0, vim.api.nvim_buf_line_count(buf), false)
+
+  local Job = require('plenary.job')
+
+  ---@diagnostic disable-next-line: missing-fields
+  Job:new({
+    command = 'kf-chat-cli',
+    args = { '--full-conversation', '--no-save', table.concat(buf_lines, '\n') },
+    on_stdout = function(_, data)
+      local lines = vim.split(data, '\n', { trimempty = false })
+
+      -- Schedule the API calls to be executed in the main loop
+      vim.schedule(function()
+        local end_row = vim.api.nvim_buf_line_count(buf)
+        vim.api.nvim_buf_set_lines(buf, end_row, end_row, false, lines)
+      end)
+    end,
+    on_stderr = function(_, data)
+      print('Error: ' .. data)
+    end,
+  }):start()
+end)
+```
+
+In addition, I use a custom telescope picker for setting the model, but that's
+also easy to do through the command line.
+
 ## Development
 
 ### Scripts
