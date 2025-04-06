@@ -58,8 +58,8 @@ example:
 
 ```json
   "bin": {
-        "custom-chat": "./executables/index.js"
-      },
+    "custom-chat": "./executables/index.js"
+  },
 ```
 
 If you've already run `npm link`, you need to run `npm unlink` and `npm link`
