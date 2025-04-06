@@ -127,6 +127,12 @@ Use --help flag for more description.
 - `-v, --view-conversation=<id>`: View a conversation
 - `-vm --view-model`: View current model
 
+### Models
+
+Anthropic, Google, and OpenAI models are hardcoded (see `AVAILABLE_MODELS`).
+For Ollama models, add their names to a `ollama-models.txt` file, one per line,
+at the root of this repo.
+
 ## Executables
 
 This repo also includes other helper or example scripts under the
