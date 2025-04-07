@@ -1,9 +1,9 @@
 import OpenAI from 'openai';
-import { Message, OpenAIModelName } from './types';
+import { Message } from './types';
 
 interface PromptOpenaiArgs {
   messages: Message[];
-  modelName: OpenAIModelName;
+  modelName: OpenAI.Chat.ChatModel;
 }
 
 export default async function promptOpenai({

@@ -1,5 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
+import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 
 import {
   AVAILABLE_ANTHROPIC_AI_MODELS,
@@ -9,13 +11,7 @@ import {
   conversationsDir,
   dataDir,
 } from './constants';
-import {
-  AnthropicAIModelName,
-  GoogleAIModelName,
-  Message,
-  ModelName,
-  OpenAIModelName,
-} from './types';
+import { GoogleAIModelName, Message, ModelName } from './types';
 import { Stats } from 'fs';
 
 interface CliState {
@@ -34,9 +30,9 @@ export function isValidModelName(modelName: string): modelName is ModelName {
 
 export function isValidAnthropicAiModelName(
   modelName: string,
-): modelName is AnthropicAIModelName {
+): modelName is Anthropic.Messages.Model {
   return AVAILABLE_ANTHROPIC_AI_MODELS.includes(
-    modelName as AnthropicAIModelName,
+    modelName as Anthropic.Messages.Model,
   );
 }
 
@@ -48,8 +44,8 @@ export function isValidGoogleAiModelName(
 
 export function isValidOpenAiModelName(
   modelName: string,
-): modelName is OpenAIModelName {
-  return AVAILABLE_OPENAI_MODELS.includes(modelName as OpenAIModelName);
+): modelName is OpenAI.Chat.ChatModel {
+  return AVAILABLE_OPENAI_MODELS.includes(modelName as OpenAI.Chat.ChatModel);
 }
 
 export async function getConversation(

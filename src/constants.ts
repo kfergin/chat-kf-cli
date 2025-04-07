@@ -1,13 +1,9 @@
 import fs from 'fs';
 import path from 'path';
+import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 
-import {
-  AnthropicAIModelName,
-  GoogleAIModelName,
-  ModelName,
-  OllamaModelName,
-  OpenAIModelName,
-} from './types';
+import { GoogleAIModelName, ModelName, OllamaModelName } from './types';
 
 export const dataDir = path.join(__dirname, '../data/');
 export const conversationsDir = path.join(dataDir, './conversations/');
@@ -18,7 +14,7 @@ export const DEFAULT_MODEL = 'gpt-4-turbo';
 
 // https://docs.anthropic.com/en/docs/about-claude/models
 // https://www.anthropic.com/pricing#anthropic-api
-export const AVAILABLE_ANTHROPIC_AI_MODELS: AnthropicAIModelName[] = [
+export const AVAILABLE_ANTHROPIC_AI_MODELS: Anthropic.Messages.Model[] = [
   'claude-3-7-sonnet-latest',
   'claude-3-5-sonnet-latest',
   'claude-3-opus-latest',
@@ -45,7 +41,7 @@ const AVAILABLE_OLLAMA_MODELS: OllamaModelName[] = (() => {
 
 // https://platform.openai.com/docs/models
 // https://openai.com/api/pricing/
-export const AVAILABLE_OPENAI_MODELS: OpenAIModelName[] = [
+export const AVAILABLE_OPENAI_MODELS: OpenAI.Chat.ChatModel[] = [
   DEFAULT_MODEL, // 128,000 tokens - $10.00 / 1M tokens - Up to Dec 2023
   'gpt-4o', // 128,000 tokens - $5.00 / 1M input tokens - Up to Oct 2023
   'gpt-4o-mini', // 128,000 tokens - $0.600 / 1M output tokens - Up to Oct 2023

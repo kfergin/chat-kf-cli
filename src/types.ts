@@ -6,31 +6,14 @@ export interface Message {
   content: string;
 }
 
-export type AnthropicAIModelName = Extract<
-  Anthropic.Messages.Model,
-  | 'claude-3-7-sonnet-latest'
-  | 'claude-3-5-sonnet-latest'
-  | 'claude-3-opus-latest'
->;
-
 export type GoogleAIModelName = 'gemini-1.5-flash' | 'gemini-1.5-pro';
 
 // Ollama model names depend on what models are installed through ollama.
 // To view models, run `ollama ls`.
 export type OllamaModelName = string;
 
-export type OpenAIModelName = Extract<
-  OpenAI.Chat.ChatModel,
-  | 'gpt-4-turbo'
-  | 'gpt-4o'
-  | 'gpt-4o-mini'
-  | 'gpt-3.5-turbo'
-  | 'o1-mini'
-  | 'o1-preview'
->;
-
 export type ModelName =
-  | AnthropicAIModelName
+  | Anthropic.Messages.Model
   | OllamaModelName
-  | OpenAIModelName
+  | OpenAI.Chat.ChatModel
   | GoogleAIModelName;
