@@ -10,7 +10,7 @@ export const conversationsDir = path.join(dataDir, './conversations/');
 
 export const isTerminal = process.stdout.isTTY;
 
-export const DEFAULT_MODEL = 'gpt-4-turbo';
+export const DEFAULT_MODEL = 'gpt-3.5-turbo';
 
 // https://docs.anthropic.com/en/docs/about-claude/models
 // https://www.anthropic.com/pricing#anthropic-api
@@ -42,12 +42,33 @@ const AVAILABLE_OLLAMA_MODELS: OllamaModelName[] = (() => {
 // https://platform.openai.com/docs/models
 // https://openai.com/api/pricing/
 export const AVAILABLE_OPENAI_MODELS: OpenAI.Chat.ChatModel[] = [
-  DEFAULT_MODEL, // 128,000 tokens - $10.00 / 1M tokens - Up to Dec 2023
-  'gpt-4o', // 128,000 tokens - $5.00 / 1M input tokens - Up to Oct 2023
-  'gpt-4o-mini', // 128,000 tokens - $0.600 / 1M output tokens - Up to Oct 2023
-  'gpt-3.5-turbo', // 16,385 tokens - $0.50 / 1M input tokens - Up to Sep 2021
-  'o1-mini', // 128,000 tokens - $3.00 / 1M input tokens - $12.00 / 1M output tokens - Up to Oct 2023
-  'o1-preview', // 128,000 tokens - $15.00 / 1M input tokens - $60.00 / 1M output tokens - Up to Oct 2023
+  /* FLAGSHIP CHAT MODELS */
+  // Fast, intelligent, flexible GPT model
+  // 128,000 tokens - $2.50 / 1M input tokens - $10.00 / 1M output tokens - Up to Sep 30, 2023
+  'gpt-4o',
+  // Fast, affordable small model for focused tasks
+  // 128,000 tokens - $0.15 / 1M output tokens - $0.60 / 1M output tokens - Up to Sep 30, 2023
+  'gpt-4o-mini',
+  // An older high-intelligence GPT model
+  // 128,000 tokens - $10.00 / 1M input tokens - $30.00 / 1M output tokens - Up to Nov 30, 2023
+  'gpt-4-turbo',
+  // An older high-intelligence GPT model
+  // 8,192 tokens - $30.00 / 1M input tokens - $60.00 / 1M output tokens - Up to Nov 30, 2023
+  'gpt-4',
+  // Legacy GPT model for cheaper chat and non-chat tasks
+  // 16,385 tokens - $0.50 / 1M input tokens - $1.50 / 1M input tokens - Up to Aug 31, 2021
+  DEFAULT_MODEL,
+
+  /* REASONING MODELS */
+  // High-intelligence reasoning model
+  // 200,000 tokens - $15.00 / 1M input tokens - $60.00 / 1M output tokens - Up to Sep 30, 2023
+  'o1',
+  // A faster, more affordable reasoning model than o1
+  // 128,000 tokens - $1.10 / 1M input tokens - $4.40 / 1M output tokens - Up to Sep 30, 2023
+  'o1-mini',
+  // Fast, flexible, intelligent reasoning model
+  // 200,000 tokens - $1.10 / 1M input tokens - $4.40 / 1M output tokens - Up to Sep 30, 2023
+  'o3-mini',
 ];
 
 export const AVAILABLE_MODELS: ModelName[] = [
