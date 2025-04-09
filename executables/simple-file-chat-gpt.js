@@ -32,22 +32,19 @@ try {
 
   fs.appendFileSync(fileName, `\n${CHAT_DELIMITER}\n\n`);
 
+  // https://platform.openai.com/docs/api-reference/chat
   const curlProcess = spawn('curl', [
     '--no-buffer',
     '--silent',
-    'https://api.anthropic.com/v1/messages',
+    'https://api.openai.com/v1/chat/completions',
     '--header',
-    `x-api-key: ${process.env.ANTHROPIC_API_KEY}`,
-    '--header',
-    'anthropic-version: 2023-06-01',
+    `Authorization: Bearer ${process.env.OPENAI_API_KEY}`,
     '--header',
     'content-type: application/json',
     '--data',
     JSON.stringify({
-      // https://docs.anthropic.com/en/docs/about-claude/models/all-models
-      max_tokens: 8192,
       messages,
-      model: 'claude-3-5-sonnet-latest',
+      model: 'gpt-4o-mini',
       stream: true,
       temperature: 0,
     }),
@@ -58,7 +55,7 @@ try {
   curlProcess.stdout.on('data', (data) => {
     const dataString = data.toString();
 
-    if (dataString.startsWith(`{"type":"error"`)) {
+    if (!dataString.startsWith('data: ')) {
       throw Error(dataString);
     }
 
@@ -72,11 +69,12 @@ try {
       if (line.startsWith('data: ')) {
         try {
           const jsonData = JSON.parse(line.substring(6));
-          if (jsonData.delta?.text) {
+          const text = jsonData.choices?.[0]?.delta.content;
+          if (text) {
             // write to stdout to show progress in terminal
-            process.stdout.write(jsonData.delta.text);
+            process.stdout.write(text);
             // update the chat file
-            fs.appendFileSync(fileName, jsonData.delta.text);
+            fs.appendFileSync(fileName, text);
           }
         } catch {
           // Ignore parsing errors
