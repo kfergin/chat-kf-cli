@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenAI } from '@google/genai';
 
 import { GoogleAIModelName, Message } from './types';
 
@@ -25,24 +25,26 @@ export default async function promptGoogleAI({
     throw Error('promptGoogleAI() was called with zero messages.');
   }
 
-  const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: modelName });
-
-  // https://ai.google.dev/gemini-api/docs/get-started/tutorial?lang=node
-  const chat = model.startChat({
+  const genAI = new GoogleGenAI({ apiKey });
+  const model = genAI.chats.create({
+    model: modelName,
     history: priorMessages.map(({ role, content }) => ({
       role: role === 'user' ? 'user' : 'model',
       parts: [{ text: content }],
     })),
   });
-  const result = await chat.sendMessageStream(lastMessage.content);
+  const result = await model.sendMessageStream({
+    message: lastMessage.content,
+  });
 
   let fullResponse = '';
 
-  for await (const chunk of result.stream) {
-    const chunkText = chunk.text();
-    process.stdout.write(chunkText);
-    fullResponse += chunkText;
+  for await (const chunk of result) {
+    const chunkText = chunk.text;
+    if (chunkText) {
+      process.stdout.write(chunkText);
+      fullResponse += chunkText;
+    }
   }
 
   return fullResponse;
