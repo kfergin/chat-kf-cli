@@ -6,7 +6,12 @@ export interface Message {
   content: string;
 }
 
-export type GoogleAIModelName = 'gemini-1.5-flash' | 'gemini-1.5-pro';
+export type GoogleAIModelName =
+  | 'gemini-2.5-pro-preview-03-25'
+  | 'gemini-2.0-flash'
+  | 'gemini-2.0-flash-lite'
+  | 'gemini-1.5-flash'
+  | 'gemini-1.5-pro';
 
 // Ollama model names depend on what models are installed through ollama.
 // To view models, run `ollama ls`.

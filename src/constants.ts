@@ -22,7 +22,41 @@ export const AVAILABLE_ANTHROPIC_AI_MODELS: Anthropic.Messages.Model[] = [
 
 // https://ai.google.dev/gemini-api/docs/models/gemini
 export const AVAILABLE_GOOGLE_AI_MODELS: GoogleAIModelName[] = [
+  // Gemini 2.5 Pro is our state-of-the-art thinking model, capable of
+  // reasoning over complex problems in code, math, and STEM, as well as
+  // analyzing large datasets, codebases, and documents using long context.
+  // Context: 1,048,576 input, 65,536 output
+  // Price input: $1.25 / 1M prompts <= 200k tokens, $2.50 / 1M prompts > 200k tokens
+  // Price output: $10.00 / 1M prompts <= 200k tokens, $15.00 / 1M prompts > 200k tokens
+  // Knowledge cutoff: January 2025
+  'gemini-2.5-pro-preview-03-25',
+  // Gemini 2.0 Flash delivers next-gen features and improved capabilities,
+  // including superior speed, native tool use, multimodal generation, and a 1M
+  // token context window.
+  // Context: 1,048,576 input, 8,192 output
+  // Price input: $0.10 / 1M prompts
+  // Price output: $0.40 / 1M prompts
+  // Knowledge cutoff: August 2024
+  'gemini-2.0-flash',
+  // A Gemini 2.0 Flash model optimized for cost efficiency and low latency.
+  // Context: 1,048,576 input, 8,192 output
+  // Price input: $0.075 / 1M prompts
+  // Price output: $0.30 / 1M prompts
+  // Knowledge cutoff: August 2024
+  'gemini-2.0-flash-lite',
+  // Gemini 1.5 Flash is a fast and versatile multimodal model for scaling
+  // across diverse tasks.
+  // Context: 1,048,576 input, 8,192 output
+  // Price input: $0.075 / 1M prompts <= 128k tokens, $0.15 / 1M prompts > 128k tokens
+  // Price output: $0.30 / 1M prompts <= 128k tokens, $0.60 / 1M prompts > 128k tokens
+  // Knowledge cutoff: September 2024
   'gemini-1.5-flash', // 1M+ tokens - Free - May 2024 (last update)
+  // Gemini 1.5 Pro is a mid-size multimodal model that is optimized for a
+  // wide-range of reasoning tasks.
+  // Context: 2,097,152 input, 8,192 output
+  // Price input: $1.25 / 1M prompts <= 128k tokens, $2.50 / 1M prompts > 128k tokens
+  // Price output: $5.00 / 1M prompts <= 128k tokens, $10.00 / 1M prompts > 128k tokens
+  // Knowledge cutoff: September 2024
   'gemini-1.5-pro', // 2M+ tokens - Free - May 2024 (last update)
 ];
 
