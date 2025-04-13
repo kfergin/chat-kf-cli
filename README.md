@@ -182,6 +182,23 @@ Demonstrates streaming chat completion with Anthropic's Claude 3 Sonnet API.
 echo "Hello, world" | ./simple-curl-example-sonnet.sh
 ```
 
+### `simple-file-chat-gpt.js`
+
+A Node.js script for interacting with the OpenAI's chat completion API
+(gpt-4o-mini) and saving conversations to a file. Takes a filename as an
+argument, reads the file contents as a chat log, sends it to the API, and
+appends the response to the same file, using `---chat-delimiter---` to separate
+turns.
+
+```bash
+./simple-file-chat-gpt.js mychatfile.txt
+```
+
+### `simple-file-chat-sonnet.js`
+
+Nearly identical to `simple-file-chat-gpt.js`, except it uses Anthropic's
+`claude-3-5-sonnet-latest` model.
+
 **Note**: Several scripts require `jq` to be installed for JSON processing. The
 Anthropic scripts require an `ANTHROPIC_API_KEY` environment variable to be
 set.
