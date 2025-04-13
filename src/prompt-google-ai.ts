@@ -25,21 +25,21 @@ export default async function promptGoogleAI({
     throw Error('promptGoogleAI() was called with zero messages.');
   }
 
-  const genAI = new GoogleGenAI({ apiKey });
-  const model = genAI.chats.create({
+  const ai = new GoogleGenAI({ apiKey });
+  const chat = ai.chats.create({
     model: modelName,
     history: priorMessages.map(({ role, content }) => ({
       role: role === 'user' ? 'user' : 'model',
       parts: [{ text: content }],
     })),
   });
-  const result = await model.sendMessageStream({
+  const response = await chat.sendMessageStream({
     message: lastMessage.content,
   });
 
   let fullResponse = '';
 
-  for await (const chunk of result) {
+  for await (const chunk of response) {
     const chunkText = chunk.text;
     if (chunkText) {
       process.stdout.write(chunkText);
