@@ -77,6 +77,15 @@ const AVAILABLE_OLLAMA_MODELS: OllamaModelName[] = (() => {
 // https://openai.com/api/pricing/
 export const AVAILABLE_OPENAI_MODELS: OpenAI.Chat.ChatModel[] = [
   /* FLAGSHIP CHAT MODELS */
+  // Flagship GPT model for complex tasks
+  // 1,047,576 tokens - $2.00 / 1M input tokens - $8.00 / 1M output tokens - Up to May 31, 2024
+  'gpt-4.1',
+  // Balanced for intelligence, speed, and cost
+  // 1,047,576 tokens - $0.40 / 1M input tokens - $1.60 / 1M output tokens - Up to May 31, 2024
+  'gpt-4.1-mini',
+  // Fastest, most cost-effective GPT-4.1 model
+  // 1,047,576 tokens - $0.10 / 1M input tokens - $0.40 / 1M output tokens - Up to May 31, 2024
+  'gpt-4.1-nano',
   // Fast, intelligent, flexible GPT model
   // 128,000 tokens - $2.50 / 1M input tokens - $10.00 / 1M output tokens - Up to Sep 30, 2023
   'gpt-4o',
@@ -94,15 +103,21 @@ export const AVAILABLE_OPENAI_MODELS: OpenAI.Chat.ChatModel[] = [
   DEFAULT_MODEL,
 
   /* REASONING MODELS */
-  // High-intelligence reasoning model
+  // Previous full o-series reasoning model
   // 200,000 tokens - $15.00 / 1M input tokens - $60.00 / 1M output tokens - Up to Sep 30, 2023
   'o1',
-  // A faster, more affordable reasoning model than o1
+  // A small model alternative to o1
   // 128,000 tokens - $1.10 / 1M input tokens - $4.40 / 1M output tokens - Up to Sep 30, 2023
   'o1-mini',
-  // Fast, flexible, intelligent reasoning model
+  // Our most powerful reasoning model
+  // 200,000 tokens - $10.00 / 1M input tokens - $40.00 / 1M output tokens - Up to May 31, 2024
+  'o3',
+  // A small model alternative to o3
   // 200,000 tokens - $1.10 / 1M input tokens - $4.40 / 1M output tokens - Up to Sep 30, 2023
   'o3-mini',
+  // Faster, more affordable reasoning model
+  // 200,000 tokens - $1.10 / 1M input tokens - $4.40 / 1M output tokens - Up to May 31, 2024
+  'o4-mini',
 ];
 
 export const AVAILABLE_MODELS: ModelName[] = [
