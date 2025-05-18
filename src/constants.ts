@@ -21,7 +21,17 @@ export const AVAILABLE_ANTHROPIC_AI_MODELS: Anthropic.Messages.Model[] = [
 ];
 
 // https://ai.google.dev/gemini-api/docs/models/gemini
+// https://ai.google.dev/gemini-api/docs/pricing
+// Note: many offer free tiers
 export const AVAILABLE_GOOGLE_AI_MODELS: GoogleAIModelName[] = [
+  // Our best model in terms of price-performance, offering well-rounded
+  // capabilities. Gemini 2.5 Flash rate limits are more restricted since it is
+  // an experimental / preview model.
+  // Context: 1,048,576 input, 65,536 output
+  // Price input: $0.15 / 1M prompts
+  // Price output: Non-thinking: $0.60 / 1M prompts, Thinking: $3.50 / 1M prompts
+  // Knowledge cutoff: January 2025
+  'gemini-2.5-flash-preview-04-17',
   // Gemini 2.5 Pro is our state-of-the-art thinking model, capable of
   // reasoning over complex problems in code, math, and STEM, as well as
   // analyzing large datasets, codebases, and documents using long context.
@@ -29,7 +39,7 @@ export const AVAILABLE_GOOGLE_AI_MODELS: GoogleAIModelName[] = [
   // Price input: $1.25 / 1M prompts <= 200k tokens, $2.50 / 1M prompts > 200k tokens
   // Price output: $10.00 / 1M prompts <= 200k tokens, $15.00 / 1M prompts > 200k tokens
   // Knowledge cutoff: January 2025
-  'gemini-2.5-pro-preview-03-25',
+  'gemini-2.5-pro-preview-05-06',
   // Gemini 2.0 Flash delivers next-gen features and improved capabilities,
   // including superior speed, native tool use, multimodal generation, and a 1M
   // token context window.
