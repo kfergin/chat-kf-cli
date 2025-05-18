@@ -113,21 +113,21 @@ export const AVAILABLE_OPENAI_MODELS: OpenAI.Chat.ChatModel[] = [
   DEFAULT_MODEL,
 
   /* REASONING MODELS */
-  // Previous full o-series reasoning model
-  // 200,000 tokens - $15.00 / 1M input tokens - $60.00 / 1M output tokens - Up to Sep 30, 2023
-  'o1',
-  // A small model alternative to o1
-  // 128,000 tokens - $1.10 / 1M input tokens - $4.40 / 1M output tokens - Up to Sep 30, 2023
-  'o1-mini',
+  // Faster, more affordable reasoning model
+  // 200,000 tokens - $1.10 / 1M input tokens - $4.40 / 1M output tokens - Up to May 31, 2024
+  'o4-mini',
   // Our most powerful reasoning model
   // 200,000 tokens - $10.00 / 1M input tokens - $40.00 / 1M output tokens - Up to May 31, 2024
   'o3',
   // A small model alternative to o3
   // 200,000 tokens - $1.10 / 1M input tokens - $4.40 / 1M output tokens - Up to Sep 30, 2023
   'o3-mini',
-  // Faster, more affordable reasoning model
-  // 200,000 tokens - $1.10 / 1M input tokens - $4.40 / 1M output tokens - Up to May 31, 2024
-  'o4-mini',
+  // Previous full o-series reasoning model
+  // 200,000 tokens - $15.00 / 1M input tokens - $60.00 / 1M output tokens - Up to Sep 30, 2023
+  'o1',
+  // A small model alternative to o1
+  // 128,000 tokens - $1.10 / 1M input tokens - $4.40 / 1M output tokens - Up to Sep 30, 2023
+  'o1-mini',
 ];
 
 export const AVAILABLE_MODELS: ModelName[] = [
