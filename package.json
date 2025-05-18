@@ -24,7 +24,7 @@
     "@google/genai": "^0.14.1",
     "dotenv": "^16.4.7",
     "ollama": "^0.5.15",
-    "openai": "^4.96.0",
+    "openai": "^4.100.0",
     "tiktoken": "^1.0.20",
     "typescript": "^5.8.2",
     "uuid": "^11.1.0"
