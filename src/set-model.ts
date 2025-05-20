@@ -5,7 +5,7 @@ export default async function setModel(modelNameMatch: string) {
   const modelToSet = /^\s*$/.test(modelNameMatch)
     ? undefined
     : AVAILABLE_MODELS.find((model) =>
-        modelNameMatch.split(',').every((part) => model.includes(part)),
+        modelNameMatch.split(',').every((part) => model.value.includes(part)),
       );
 
   if (!modelToSet) {
@@ -19,8 +19,8 @@ Available models:\n- ${AVAILABLE_MODELS.join('\n- ')}
   }
 
   try {
-    await patchState({ selectedModel: modelToSet });
-    process.stdout.write(`Model set to "${modelToSet}"\n`);
+    await patchState({ selectedModel: modelToSet.value });
+    process.stdout.write(`Model set to "${modelToSet.value}"\n`);
   } catch (error) {
     console.log(error);
     let errorMessage = 'Unknown error';

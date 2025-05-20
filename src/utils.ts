@@ -25,27 +25,33 @@ export async function deleteConversation(conversationId: string) {
 }
 
 export function isValidModelName(modelName: string): modelName is ModelName {
-  return AVAILABLE_MODELS.includes(modelName as ModelName);
+  return AVAILABLE_MODELS.some(
+    ({ value }) => value === (modelName as ModelName),
+  );
 }
 
 export function isValidAnthropicAiModelName(
   modelName: string,
 ): modelName is Anthropic.Messages.Model {
-  return AVAILABLE_ANTHROPIC_AI_MODELS.includes(
-    modelName as Anthropic.Messages.Model,
+  return AVAILABLE_ANTHROPIC_AI_MODELS.some(
+    ({ value }) => value === (modelName as Anthropic.Messages.Model),
   );
 }
 
 export function isValidGoogleAiModelName(
   modelName: string,
 ): modelName is GoogleAIModelName {
-  return AVAILABLE_GOOGLE_AI_MODELS.includes(modelName as GoogleAIModelName);
+  return AVAILABLE_GOOGLE_AI_MODELS.some(
+    ({ value }) => value === (modelName as GoogleAIModelName),
+  );
 }
 
 export function isValidOpenAiModelName(
   modelName: string,
 ): modelName is OpenAI.Chat.ChatModel {
-  return AVAILABLE_OPENAI_MODELS.includes(modelName as OpenAI.Chat.ChatModel);
+  return AVAILABLE_OPENAI_MODELS.some(
+    ({ value }) => value === (modelName as OpenAI.Chat.ChatModel),
+  );
 }
 
 export async function getConversation(
@@ -98,7 +104,7 @@ export function printModelInformation(selectedModel: string) {
   process.stdout.write(
     `Model in use: ${selectedModel}.
 
-Available models:\n- ${AVAILABLE_MODELS.join('\n- ')}
+Available models:\n- ${AVAILABLE_MODELS.map((model) => `${model.value}${!model.description ? '' : `\n  - ${model.description}`}`).join('\n- ')}
 
 Pricing:
 - https://www.anthropic.com/pricing#anthropic-api

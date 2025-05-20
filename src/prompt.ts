@@ -60,7 +60,7 @@ export default async function prompt({
 
   if (!isValidModelName(modelName)) {
     process.stderr.write(
-      `Invalid model name. Available options: ${AVAILABLE_MODELS.join(', ')}\n`,
+      `Invalid model name. Available options: ${AVAILABLE_MODELS.map(({ value }) => value).join(', ')}\n`,
     );
     process.exit(1);
   }
