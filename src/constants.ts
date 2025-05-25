@@ -22,9 +22,35 @@ type AvailableModel<Value> = {
 // TODO: Add descriptions
 export const AVAILABLE_ANTHROPIC_AI_MODELS: AvailableModel<Anthropic.Messages.Model>[] =
   [
-    { value: 'claude-3-7-sonnet-latest' },
-    { value: 'claude-3-5-sonnet-latest' },
-    { value: 'claude-3-opus-latest' },
+    {
+      value: 'claude-opus-4-0',
+      description:
+        'Our most capable model. Highest level of intelligence and capability.',
+    },
+    {
+      value: 'claude-sonnet-4-0',
+      description:
+        'High-performance model. High intelligence and balanced performance.',
+    },
+    {
+      value: 'claude-3-7-sonnet-latest',
+      description:
+        'High-performance model with early extended thinking. High intelligence with toggleable extended thinking.',
+    },
+    {
+      value: 'claude-3-5-sonnet-latest',
+      description:
+        'Our previous intelligent model. High level of intelligence and capability.',
+    },
+    {
+      value: 'claude-3-5-haiku-latest',
+      description: 'Our fastest model. Intelligence at blazing speeds.',
+    },
+    {
+      value: 'claude-3-opus-latest',
+      description:
+        'Powerful model for complex tasks. Top-level intelligence, fluency, and understanding.',
+    },
   ];
 
 // https://ai.google.dev/gemini-api/docs/models/gemini
