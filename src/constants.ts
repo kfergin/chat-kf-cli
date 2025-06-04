@@ -58,7 +58,7 @@ export const AVAILABLE_ANTHROPIC_AI_MODELS: AvailableModel<Anthropic.Messages.Mo
 // Note: many offer free tiers
 export const AVAILABLE_GOOGLE_AI_MODELS: AvailableModel<GoogleAIModelName>[] = [
   {
-    value: 'gemini-2.5-flash-preview-04-17',
+    value: 'gemini-2.5-flash-preview-05-20',
     description:
       'Our best model in terms of price-performance, offering well-rounded capabilities. Gemini 2.5 Flash rate limits are more restricted since it is an experimental / preview model. Context: 1,048,576 input, 65,536 output. Price input: $0.15 / 1M prompts. Price output: Non-thinking: $0.60 / 1M prompts, Thinking: $3.50 / 1M prompts. Knowledge cutoff: January 2025.',
   },
