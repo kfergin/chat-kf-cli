@@ -63,7 +63,7 @@ export const AVAILABLE_GOOGLE_AI_MODELS: AvailableModel<GoogleAIModelName>[] = [
       'Our best model in terms of price-performance, offering well-rounded capabilities. Gemini 2.5 Flash rate limits are more restricted since it is an experimental / preview model. Context: 1,048,576 input, 65,536 output. Price input: $0.15 / 1M prompts. Price output: Non-thinking: $0.60 / 1M prompts, Thinking: $3.50 / 1M prompts. Knowledge cutoff: January 2025.',
   },
   {
-    value: 'gemini-2.5-pro-preview-05-06',
+    value: 'gemini-2.5-pro-preview-06-05',
     description:
       'Gemini 2.5 Pro is our state-of-the-art thinking model, capable of reasoning over complex problems in code, math, and STEM, as well as analyzing large datasets, codebases, and documents using long context. Context: 1,048,576 input, 65,536 output. Price input: $1.25 / 1M prompts <= 200k tokens, $2.50 / 1M prompts > 200k tokens. Price output: $10.00 / 1M prompts <= 200k tokens, $15.00 / 1M prompts > 200k tokens. Knowledge cutoff: January 2025.',
   },
