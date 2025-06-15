@@ -17,6 +17,9 @@ type AvailableModel<Value> = {
   description?: string;
 };
 
+// An open-source database of LLMs
+// https://models.dev/
+
 // https://docs.anthropic.com/en/docs/about-claude/models
 // https://www.anthropic.com/pricing#anthropic-api
 // TODO: Add descriptions

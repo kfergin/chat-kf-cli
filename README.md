@@ -133,6 +133,16 @@ Anthropic, Google, and OpenAI models are hardcoded (see `AVAILABLE_MODELS`).
 For Ollama models, add their names to a `ollama-models.txt` file, one per line,
 at the root of this repo.
 
+#### References
+
+- [https://models.dev/](https://models.dev/)
+- [https://docs.anthropic.com/en/docs/about-claude/models](https://docs.anthropic.com/en/docs/about-claude/models)
+- [https://www.anthropic.com/pricing#anthropic-api](https://www.anthropic.com/pricing#anthropic-api)
+- [https://ai.google.dev/gemini-api/docs/models/gemini](https://ai.google.dev/gemini-api/docs/models/gemini)
+- [https://ai.google.dev/gemini-api/docs/pricing](https://ai.google.dev/gemini-api/docs/pricing)
+- [https://platform.openai.com/docs/models](https://platform.openai.com/docs/models)
+- [https://openai.com/api/pricing/](https://openai.com/api/pricing/)
+
 ## Executables
 
 This repo also includes other helper or example scripts under the
