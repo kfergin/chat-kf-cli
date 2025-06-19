@@ -17,33 +17,37 @@ type AvailableModel<Value> = {
   description?: string;
 };
 
+// DESCRIPTION FORMAT
+// '<DESCRIPTION>. Context: <NNN> input, <NNN> output. Price input: <$$$> / <NNN> tokens <= <NNN> tokens, <$$$> / <NNN> tokens > <NNN> tokens. Price output: <$$$> / <NNN> tokens <= <NNN> tokens, <$$$> / <NNN> tokens > <NNN> tokens. Knowledge cutoff: <DATE>.',
+
 // An open-source database of LLMs
 // https://models.dev/
 
 // https://docs.anthropic.com/en/docs/about-claude/models
-// https://www.anthropic.com/pricing#anthropic-api
+// https://www.anthropic.com/pricing#api
 // TODO: Add descriptions
 export const AVAILABLE_ANTHROPIC_AI_MODELS: AvailableModel<Anthropic.Messages.Model>[] =
   [
     {
       value: 'claude-opus-4-0',
       description:
-        'Our most capable model. Highest level of intelligence and capability.',
+        'Our most capable model. Highest level of intelligence and capability. Context: 200K input, 32K output. Price input: $15 / 1M tokens. Price output: $75 / 1M tokens. Knowledge cutoff: Mar 2025.',
     },
     {
       value: 'claude-sonnet-4-0',
       description:
-        'High-performance model. High intelligence and balanced performance.',
+        'High-performance model. High intelligence and balanced performance. Context: 200K input, 64K output. Price input: $3 / 1M tokens. Price output: $15 / 1M tokens. Knowledge cutoff: Mar 2025.',
     },
     {
       value: 'claude-3-7-sonnet-latest',
       description:
-        'High-performance model with early extended thinking. High intelligence with toggleable extended thinking.',
+        // '',
+        'High-performance model with early extended thinking. High intelligence with toggleable extended thinking. Context: 200K input, 64K output. Price input: $3 / 1M tokens. Price output: $15 / 1M tokens. Knowledge cutoff: Nov 2024.',
     },
     {
       value: 'claude-3-5-sonnet-latest',
       description:
-        'Our previous intelligent model. High level of intelligence and capability.',
+        'Our previous intelligent model. High level of intelligence and capability. Context: 200K input, 8,192 output. Price input: $3 / 1M tokens. Price output: $15 / 1M tokens. Knowledge cutoff: Apr 2024.',
     },
     {
       value: 'claude-3-5-haiku-latest',
